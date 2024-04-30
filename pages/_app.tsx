@@ -12,7 +12,7 @@ const IMAGE_URL =
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <title>{TITLE}</title>
+      <title>BORG Token Metrics</title>
       <DefaultSeo
         title={TITLE}
         description={DESCRIPTION}
@@ -38,9 +38,9 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       <meta name="twitter:title" content={TITLE} />
       <meta name="twitter:description" content={DESCRIPTION} />
-      <meta name="twitter:image" content={IMAGE_URL} />
-      <meta name="twitter:image:width" content="1200" />
-      <meta name="twitter:image:height" content="630" />
+      <meta property="twitter:image" content={IMAGE_URL} />
+      <meta property="twitter:image:width" content="1200" />
+      <meta property="twitter:image:height" content="630" />
       <Component {...pageProps} />;
     </>
   );
