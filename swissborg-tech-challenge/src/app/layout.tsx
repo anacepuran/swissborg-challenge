@@ -20,8 +20,14 @@ export default function RootLayout({
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content="{metadata.title}" />
-        <meta property="og:description" content="{metadata.description}" />
+        <meta
+          property="og:title"
+          content="BORG Token Metrics and Breakdown Page"
+        />
+        <meta
+          property="og:description"
+          content="Deep-dive into the statistics of BORG and the mechanics of the full SwissBorg Ecosystem."
+        />
         <meta
           property="og:image"
           content="https://anacepuran.github.io/public/shareable-url.png"
@@ -32,8 +38,14 @@ export default function RootLayout({
         />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="{metadata.title}" />
-        <meta name="twitter:description" content="{metadata.description}" />
+        <meta
+          name="twitter:title"
+          content="BORG Token Metrics and Breakdown Page"
+        />
+        <meta
+          name="twitter:description"
+          content="Deep-dive into the statistics of BORG and the mechanics of the full SwissBorg Ecosystem."
+        />
         <meta
           name="twitter:image"
           content="https://anacepuran.github.io/public/shareable-url.png"
