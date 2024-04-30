@@ -41,7 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <meta property="twitter:image" content={IMAGE_URL} />
       <meta property="twitter:image:width" content="1200" />
       <meta property="twitter:image:height" content="630" />
-      <Component {...pageProps} />;
+      <main>
+        <Component {...pageProps} />
+      </main>
     </>
   );
 }

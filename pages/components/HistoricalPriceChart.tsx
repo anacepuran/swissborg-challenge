@@ -74,7 +74,7 @@ export default function HistoricalPriceChart() {
           </div>
         )}
       </ChartHeader>
-      <Separator />
+      <div className="separator" />
       <ApexChart
         options={chartOptions}
         series={chartOptions.series}
@@ -103,7 +103,7 @@ const ChartWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 520px;
+  width: fit-content;
   background-color: rgba(25, 30, 41, 0.9);
   border-radius: 10px;
   box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
@@ -134,12 +134,7 @@ const StyledButton = styled.button<{ $isActive: boolean; $index: number }>`
   }
 `;
 
-const Separator = styled.div`
-  background-color: #fff;
-  height: 1px;
-  width: 100%;
-  opacity: 0.3;
-`;
+const Separator = styled.div``;
 
 const ChartHeader = styled.div`
   width: 100%;

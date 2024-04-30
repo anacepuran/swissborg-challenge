@@ -89,22 +89,37 @@ export function getHistoricalChartOptions(
 
     grid: {
       show: true,
-      borderColor: "rgba(255,255,255,0.1)",
-      position: "back",
+      borderColor: "rgba(255,255,255,.05)",
       padding: {
         left: -5,
         right: -5,
       },
     },
+    responsive: [
+      {
+        breakpoint: 600,
+        options: {
+          chart: {
+            width: 300,
+          },
+        },
+      },
+      // {
+      //   breakpoint: 600,
+      //   options: {
+      //     chart: {
+      //       width: 400,
+      //     },
+      //   },
+      // },
+      // {
+      //   breakpoint: 600,
+      //   options: {
+      //     chart: {
+      //       width: 400,
+      //     },
+      //   },
+      // },
+    ],
   };
-  // responsive: [
-  //   {
-  //     breakpoint: 600,
-  //     options: {
-  //       chart: {
-  //         width: 400,
-  //       },
-  //     },
-  //   },
-  // ],
 }
