@@ -18,11 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta property="og:title" content={metadata.title?.toString()} />
-        <meta
-          property="og:description"
-          content={metadata.description?.toString()}
-        />
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:title" content="{metadata.title}" />
+        <meta property="og:description" content="{metadata.description}" />
         <meta
           property="og:image"
           content="https://anacepuran.github.io/public/shareable-url.png"
@@ -33,11 +32,8 @@ export default function RootLayout({
         />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={metadata.title?.toString()} />
-        <meta
-          name="twitter:description"
-          content={metadata.description?.toString()}
-        />
+        <meta name="twitter:title" content="{metadata.title}" />
+        <meta name="twitter:description" content="{metadata.description}" />
         <meta
           name="twitter:image"
           content="https://anacepuran.github.io/public/shareable-url.png"
@@ -46,6 +42,7 @@ export default function RootLayout({
           name="twitter:url"
           content="https://swissborg-challenge.vercel.app/"
         />
+        <title>BORG Token Metrics</title>
       </head>
       <body className={inter.className} style={{ fontFamily: "TT Commons" }}>
         {children}
