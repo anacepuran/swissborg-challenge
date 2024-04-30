@@ -37,6 +37,8 @@ export default function App({ Component, pageProps }: AppProps) {
         name="twitter:image"
         content="https://swissborg-challenge.vercel.app/images/shareable-url.png"
       />
+      <meta name="twitter:image:width" content="1200" />
+      <meta name="twitter:image:height" content="630" />
       <Component {...pageProps} />;
     </>
   );
