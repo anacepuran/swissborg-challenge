@@ -16,7 +16,6 @@ export default function HistoricalPriceChart() {
   useEffect(() => {
     const fetchDataAsync = async () => {
       const res = await getPriceInformation();
-      console.log(res);
       setPriceInformation(res["usd"]);
     };
     fetchDataAsync();
