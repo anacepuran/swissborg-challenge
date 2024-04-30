@@ -11,14 +11,14 @@ export default function Page() {
             backgroundImage:
               "linear-gradient(to bottom right, #191e29, #364053)",
           }}>
-          <h1 className="text-6xl font-bold">BORG Token Metrics</h1>
+          <h1 className="text-4xl lg:text-6xl font-bold">BORG Token Metrics</h1>
           <p className="font-light">
             Deep-dive into the statistics of BORG and the mechanics of the full
             SwissBorg Ecosystem.
           </p>
           <HistoricalPriceChart />
         </div>
-        <div className="flex flex-col text-black p-4 gap-12">
+        <div className="text-black">
           <h2 className="text-4xl font-bold text-center">
             Breakdown of BORG&apos;s circulating supply
           </h2>

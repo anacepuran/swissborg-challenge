@@ -46,21 +46,19 @@ body {
   }
 }
 
-@font-face {
-  font-family: 'TT Commons';
-  src: url('/fonts/TT-Commons-Regular.otf') format('opentype');
-  font-weight: normal;
-}
+
 @font-face {
   font-family: 'TT Commons';
   src: url('/fonts/TT-Commons-Medium.otf') format('opentype');
   font-weight: bold;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'TT Commons';
   src: url('/fonts/TT-Commons-Light.otf') format('opentype');
   font-weight: 'light';
+  font-display: swap;
 }
 
 

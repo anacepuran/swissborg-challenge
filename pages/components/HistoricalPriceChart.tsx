@@ -134,8 +134,6 @@ const StyledButton = styled.button<{ $isActive: boolean; $index: number }>`
   }
 `;
 
-const Separator = styled.div``;
-
 const ChartHeader = styled.div`
   width: 100%;
   padding: 1rem 1rem 0.6rem 0.6rem;
