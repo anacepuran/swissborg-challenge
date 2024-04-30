@@ -26,14 +26,14 @@ export default function App({ Component, pageProps }: AppProps) {
           handle: "@handle",
           site: "@site",
           cardType: "summary_large_image",
-          images: [
-            {
-              url: "https://swissborg-challenge.vercel.app/images/shareable-url.png",
-              width: 1200,
-              height: 630,
-              alt: "BORG Token Metrics",
-            },
-          ],
+          // images: [
+          //   {
+          //     url: "https://swissborg-challenge.vercel.app/images/shareable-url.png",
+          //     width: 1200,
+          //     height: 630,
+          //     alt: "BORG Token Metrics",
+          //   },
+          // ],
         }}
       />
       <Component {...pageProps} />;
