@@ -28,6 +28,15 @@ export default function App({ Component, pageProps }: AppProps) {
           cardType: "summary_large_image",
         }}
       />
+      <meta name="twitter:title" content="SwissBorg - BORG Token Metrics" />
+      <meta
+        name="twitter:description"
+        content="Deep-dive into the statistics of BORG and the mechanics of the full SwissBorg Ecosystem."
+      />
+      <meta
+        name="twitter:image"
+        content="https://swissborg-challenge.vercel.app/images/shareable-url.png"
+      />
       <Component {...pageProps} />;
     </>
   );
