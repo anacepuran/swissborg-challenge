@@ -13,9 +13,6 @@ export function getHistoricalChartOptions(
       toolbar: { show: false },
       zoom: { enabled: false },
       background: "rgba(25, 30, 41, 0.9)",
-      animations: {
-        enabled: false,
-      },
     },
     series: [
       {
@@ -100,7 +97,7 @@ export function getHistoricalChartOptions(
     },
     responsive: [
       {
-        breakpoint: 600,
+        breakpoint: 786,
         options: {
           chart: {
             width: 300,

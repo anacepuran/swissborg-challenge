@@ -40,6 +40,26 @@ body {
   opacity: 0.3; */
 }
 
+.historical-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 240px;
+  width: 520px;
+  background-color: rgba(25, 30, 41, 0.9);
+  border-radius: 10px;
+  box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .historical-chart-wrapper {
+    height: 240px;
+    width: 300px;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

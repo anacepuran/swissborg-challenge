@@ -10,6 +10,7 @@ export default function Page() {
           style={{
             backgroundImage:
               "linear-gradient(to bottom right, #191e29, #364053)",
+            minHeight: "52vh",
           }}>
           <h1 className="text-4xl lg:text-6xl font-bold">BORG Token Metrics</h1>
           <p className="font-light">

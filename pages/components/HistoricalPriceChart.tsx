@@ -52,7 +52,7 @@ export default function HistoricalPriceChart() {
   if (!historicalPriceData || !priceInformation) return;
 
   return (
-    <ChartWrapper>
+    <div className="historical-chart-wrapper">
       <ChartHeader className="flex gap-3">
         <Image
           src={"icons/usd-to-borg.svg"}
@@ -63,7 +63,7 @@ export default function HistoricalPriceChart() {
         />
         {priceInformation && (
           <div className="font-light text-left">
-            <p>USD {priceInformation.price}</p>
+            <p></p>
             <p
               className="text-primary text-sm"
               style={{ color: getPriceColor(priceInformation?.change24h) }}>
@@ -74,6 +74,7 @@ export default function HistoricalPriceChart() {
         )}
       </ChartHeader>
       <div className="separator" />
+      <div className="h-full"></div>
       <ApexChart
         options={chartOptions}
         series={chartOptions.series}
@@ -94,20 +95,11 @@ export default function HistoricalPriceChart() {
           );
         })}
       </div>
-    </ChartWrapper>
+    </div>
   );
 }
 
-const ChartWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  background-color: rgba(25, 30, 41, 0.9);
-  border-radius: 10px;
-  box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.2);
-`;
+const ChartWrapper = styled.div``;
 
 const StyledButton = styled.button<{ $isActive: boolean; $index: number }>`
   width: 100%;
