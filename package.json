@@ -9,11 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "apexcharts": "^3.49.0",
+    "axios": "^1.6.8",
     "next": "14.2.3",
     "next-seo": "^6.5.0",
     "react": "^18",
-    "react-dom": "^18",
-    "vercel": "^34.1.4"
+    "react-apexcharts": "^1.4.1",
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.1.8",
+    "vercel": "^32.3.0",
+    "zod": "^3.23.5"
   },
   "devDependencies": {
     "@types/node": "^20",
