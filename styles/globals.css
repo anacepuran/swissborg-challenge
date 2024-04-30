@@ -6,6 +6,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-color: #01C38D;
+  --primary-text-color: #01C38D;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,4 +32,29 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@font-face {
+  font-family: 'TT Commons';
+  src: url('/fonts/TT-Commons-Regular.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'TT Commons';
+  src: url('/fonts/TT-Commons-DemiBold.otf') format('opentype');
+  font-weight: bolder;
+}
+@font-face {
+  font-family: 'TT Commons';
+  src: url('/fonts/TT-Commons-Bold.otf') format('opentype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'TT Commons';
+  src: url('/fonts/TT-Commons-Light.otf') format('opentype');
+  font-weight: 100;
+}
+
+.text-primary {
+  color: var(--primary-text-color)
 }
