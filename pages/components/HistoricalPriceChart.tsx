@@ -49,7 +49,7 @@ export default function HistoricalPriceChart() {
     return getHistoricalChartOptions(series.series, series.categories);
   }, [series]);
 
-  if (!historicalPriceData) return;
+  if (!historicalPriceData || !priceInformation) return;
 
   return (
     <ChartWrapper>

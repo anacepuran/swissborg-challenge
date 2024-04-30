@@ -52,6 +52,8 @@ export default function Breakdown() {
     );
   };
 
+  if (!borgStats) return;
+
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-2 p-12 pb-20 items-center">
       <div className="max-w-sm lg:max-w-md flex flex-col justify-center">
