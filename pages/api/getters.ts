@@ -1,4 +1,4 @@
-import { BorgStats, HistoricalPricePeriod, Price } from "../utils/types";
+import { BorgStats, HistoricalPricePeriod, Price } from "../../utils/types";
 import fetchData from "./fetch";
 
 // Data caching

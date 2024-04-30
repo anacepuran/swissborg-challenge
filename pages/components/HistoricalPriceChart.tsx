@@ -2,11 +2,11 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import { getHistoricalChartOptions } from "../../utils/chartConfiguration";
+import { HISTORICAL_PERIOD_OPTIONS } from "../../utils/configuration";
+import { HistoricalPricePeriod, Price } from "../../utils/types";
+import { getPriceColor } from "../../utils/utils";
 import { getHistoricalData, getPriceInformation } from "../api/getters";
-import { getHistoricalChartOptions } from "../utils/chartConfiguration";
-import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPricePeriod, Price } from "../utils/types";
-import { getPriceColor } from "../utils/utils";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
