@@ -25,6 +25,7 @@ export default function PriceInformation() {
           width={32}
           height={32}
           style={{ width: "4rem", height: "auto" }}
+          priority
         />
         {priceInformation && (
           <div className="font-light text-left">

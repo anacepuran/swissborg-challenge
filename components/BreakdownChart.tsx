@@ -19,6 +19,7 @@ export default function Breakdown() {
             width={32}
             height={32}
             style={{ width: "2.6rem", height: "auto" }}
+            priority
           />
           <div className="flex flex-col-reverse w-full justify-between lg:flex-row lg:gap-2 lg:items-center ">
             <p className="text-lg lg:text-xl font-light text-left">

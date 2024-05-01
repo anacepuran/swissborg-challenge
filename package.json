@@ -10,6 +10,7 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^6.0.0",
     "@next/bundle-analyzer": "^14.2.3",
     "apexcharts": "^3.49.0",
     "axios": "^1.6.8",
