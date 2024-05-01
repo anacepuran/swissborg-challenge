@@ -14,18 +14,13 @@ export function useFetchData<T>(
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
-        if (enableCaching) {
-          const cachedItem = localStorage.getItem(endpoint);
-          if (cachedItem) {
-            setData(JSON.parse(cachedItem));
-          } else {
-            const response = await axios.get<T>(`${API_URL}/${endpoint}`);
-            setData(response.data);
-            localStorage.setItem(endpoint, JSON.stringify(response.data));
-          }
+        const cachedItem = localStorage.getItem(endpoint);
+        if (cachedItem) {
+          setData(JSON.parse(cachedItem));
         } else {
           const response = await axios.get<T>(`${API_URL}/${endpoint}`);
           setData(response.data);
+          localStorage.setItem(endpoint, JSON.stringify(response.data));
         }
       } catch (error) {
         console.error("Error fetching data");

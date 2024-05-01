@@ -122,3 +122,11 @@ body {
       transform: rotate(360deg);
   }
 } 
+
+.supply-chart-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}

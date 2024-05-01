@@ -34,6 +34,7 @@ export function getHistoricalChartOptions(
       crosshairs: { show: true },
       axisBorder: { show: false },
       axisTicks: { show: false },
+      tickPlacement: "between",
       floating: true,
       labels: {
         style: { fontWeight: 100, fontSize: "11px" },
@@ -88,4 +89,41 @@ export function getHistoricalChartOptions(
       },
     ],
   };
+}
+
+export function getSupplyChartOptions(series: {
+  series: number[];
+  labels: string[];
+}) {
+  return {
+    chart: {
+      type: "donut",
+      fontFamily: "TT Commons, sans-serif",
+      toolbar: { show: false },
+      dropShadow: { enabled: true, opacity: 0.2 },
+    },
+    series: series.series,
+    labels: series.labels,
+    plotOptions: {
+      pie: {
+        expandOnClick: false,
+        donut: { size: "68%" },
+      },
+    },
+    states: {
+      active: { filter: { type: "none" } },
+      hover: { filter: { type: "none" } },
+    },
+    legend: { show: true, position: "bottom" },
+    tooltip: { enabled: false },
+    dataLabels: { enabled: false },
+    stroke: { width: 0 },
+    colors: [
+      "rgba(204, 243, 232, 1)",
+      "rgba(19, 229, 191, 1)",
+      "rgba(173, 149, 255, 1)",
+      "rgba(54, 64, 83, 1)",
+      "rgba(122, 188, 255, 1)",
+    ],
+  } as ApexOptions;
 }

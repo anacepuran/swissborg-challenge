@@ -52,7 +52,7 @@ export default function HistoricalPriceChart() {
       chartData.categories,
       selectedPeriod
     );
-  }, [chartData]);
+  }, [chartData, selectedPeriod]);
 
   if (!chartData) return;
 

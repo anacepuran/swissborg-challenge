@@ -3,6 +3,7 @@ import { BorgStats } from "@/utils/types";
 import { formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
 import { useFetchData } from "../api/fetch";
+import { SupplyChart } from "./SupplyChart";
 
 export default function Breakdown() {
   const { data: borgStats } = useFetchData<BorgStats>("borg-stats");
@@ -19,7 +20,7 @@ export default function Breakdown() {
             height={32}
             style={{ width: "2.6rem", height: "auto" }}
           />
-          <div className="flex flex-col lg:flex-row gap-0 lg:gap-3 w-full justify-between lg:items-center flex-col-reverse">
+          <div className="flex flex-col-reverse w-full justify-between lg:flex-row lg:gap-2 lg:items-center ">
             <p className="text-lg lg:text-xl font-light text-left">
               {row.title}
             </p>
@@ -49,15 +50,16 @@ export default function Breakdown() {
   if (!borgStats) return;
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-2 p-12 pb-20 items-center">
-      <div className="max-w-sm lg:max-w-md flex flex-col justify-center">
+    <div className="flex flex-col lg:grid lg:grid-cols-2 pb-20 p-8">
+      <div className="flex flex-col justify-center">
         {borgStats &&
           STATS_TO_DISPLAY.map((stat) => {
             return <div key={stat.attrName}>{BorgStatRow(stat)}</div>;
           })}
       </div>
-      <div>CHART</div>
+      <div className="pt-4">
+        <SupplyChart stats={borgStats} />
+      </div>
     </div>
-    //   <div className="p-12">{/* <SupplyChart stats={borgStats} /> */}</div>
   );
 }
