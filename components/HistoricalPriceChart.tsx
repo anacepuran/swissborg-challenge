@@ -1,12 +1,17 @@
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import { getHistoricalChartOptions } from "../../utils/chartConfiguration";
-import { HISTORICAL_PERIOD_OPTIONS } from "../../utils/configuration";
-import { HistoricalPricePeriod } from "../../utils/types";
 import { useFetchData } from "../api/fetch";
+import { getHistoricalChartOptions } from "../utils/chartConfiguration";
+import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
+import { HistoricalPrice, HistoricalPricePeriod } from "../utils/types";
 import PriceInformation from "./PriceInformation";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+type ChartData = {
+  series: number[];
+  categories: string[];
+};
 
 export default function HistoricalPriceChart() {
   const [selectedPeriod, setSelectedPeriod] = useState("day");
@@ -21,20 +26,27 @@ export default function HistoricalPriceChart() {
     setSelectedPeriod(selected);
   };
 
-  const series = useMemo(() => {
-    const reducedData = historicalPriceData?.filter((item, i) => i % 10 === 0);
-    return {
-      series: reducedData?.map((price) => price.price) ?? [],
-      categories: reducedData?.map((price) => price.timestamp),
-    };
+  // Assuming historicalPriceData is an array of HistoricalPrice objects
+  const chartData: ChartData = useMemo(() => {
+    const reducedData =
+      historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [];
+    const [series, categories] = reducedData.reduce(
+      ([series, categories], { price, timestamp }: HistoricalPrice) => {
+        series.push(price);
+        categories.push(timestamp);
+        return [series, categories];
+      },
+      [[], []] as [number[], string[]] // Specify initial values and types for destructuring
+    );
+    return { series, categories };
   }, [historicalPriceData]);
 
   const chartOptions = useMemo(() => {
-    if (!series) return {};
-    return getHistoricalChartOptions(series.series, series.categories);
-  }, [series]);
+    if (!chartData) return {};
+    return getHistoricalChartOptions(chartData.series, chartData.categories);
+  }, [chartData]);
 
-  if (!series) return;
+  if (!chartData) return;
 
   return (
     <div className="historical-chart-wrapper">

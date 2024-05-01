@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useMemo } from "react";
-import { Price } from "../../utils/types";
-import { getPriceColor } from "../../utils/utils";
 import { useFetchData } from "../api/fetch";
+import { Price } from "../utils/types";
+import { getPriceColor } from "../utils/utils";
 
 export default function PriceInformation() {
   const {
