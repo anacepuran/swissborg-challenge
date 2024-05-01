@@ -1,5 +1,13 @@
-import Breakdown from "../components/BreakdownChart";
-import HistoricalPriceChart from "../components/HistoricalPriceChart";
+import dynamic from "next/dynamic";
+// import HistoricalPriceChart from "../components/HistoricalPriceChart";
+
+const BreakdownChart = dynamic(() => import("../components/BreakdownChart"), {
+  ssr: false,
+});
+const HistoricalPriceChart = dynamic(
+  () => import("../components/HistoricalPriceChart"),
+  { ssr: false }
+);
 
 export default function Page() {
   return (
@@ -16,7 +24,7 @@ export default function Page() {
         <h2 className="text-4xl font-bold text-center">
           Breakdown of BORG&apos;s circulating supply
         </h2>
-        <Breakdown />
+        <BreakdownChart />
       </div>
     </div>
   );
