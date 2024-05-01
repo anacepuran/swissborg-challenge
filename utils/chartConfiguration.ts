@@ -14,6 +14,10 @@ export function getHistoricalChartOptions(
       zoom: { enabled: false },
       background: "rgba(25, 30, 41, 0.9)",
     },
+    noData: {
+      text: "No data to display.",
+      offsetY: -10,
+    },
     series: [
       {
         name: "USD to BORG",
@@ -98,6 +102,7 @@ export function getHistoricalChartOptions(
           },
         },
       },
+
       // {
       //   breakpoint: 600,
       //   options: {

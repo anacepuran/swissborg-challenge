@@ -28,7 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 244px;
+  height: 240px;
   width: 520px;
   background-color: rgba(25, 30, 41, 0.9);
   border-radius: 10px;
@@ -94,3 +94,23 @@ body {
   font-weight: 'light';
   font-display: swap;
 }
+.loader {
+  width: 12px;
+  height: 12px;
+  margin-left: 1rem;
+  border: 1px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 2s linear infinite;
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+} 

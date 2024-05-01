@@ -1,11 +1,10 @@
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { getHistoricalChartOptions } from "../../utils/chartConfiguration";
 import { HISTORICAL_PERIOD_OPTIONS } from "../../utils/configuration";
-import { HistoricalPricePeriod, Price } from "../../utils/types";
-import { getPriceColor } from "../../utils/utils";
+import { HistoricalPricePeriod } from "../../utils/types";
 import { useFetchData } from "../api/fetch";
+import PriceInformation from "./PriceInformation";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -17,17 +16,6 @@ export default function HistoricalPriceChart() {
     loading,
     error,
   } = useFetchData<HistoricalPricePeriod>("historical-price/" + selectedPeriod);
-
-  const {
-    data: priceInformation,
-    loading: informationLoading,
-    error: informationError,
-  } = useFetchData<Price>("price");
-
-  const data = useMemo(() => {
-    console.log(historicalPriceData);
-    console.log(priceInformation);
-  }, [historicalPriceData, priceInformation]);
 
   const handlePeriodSelection = (selected: string) => {
     setSelectedPeriod(selected);
@@ -46,31 +34,11 @@ export default function HistoricalPriceChart() {
     return getHistoricalChartOptions(series.series, series.categories);
   }, [series]);
 
-  if (!series || !priceInformation) return;
+  if (!series) return;
 
   return (
     <div className="historical-chart-wrapper">
-      <div className="historical-chart-header flex gap-3">
-        <Image
-          src={"icons/usd-to-borg.svg"}
-          alt={"usd-to-borg"}
-          width={32}
-          height={32}
-          style={{ width: "4rem", height: "auto" }}
-        />
-        {priceInformation && (
-          <div className="font-light text-left">
-            <p>USD {priceInformation?.price?.toFixed(3)}</p>
-            <p
-              className="text-primary text-sm"
-              style={{ color: getPriceColor(priceInformation?.change24h) }}>
-              {priceInformation.change24h}%{" "}
-              <span className="text-primary">24 Hours</span>
-            </p>
-          </div>
-        )}
-      </div>
-      <div className="separator" />
+      <PriceInformation />
       <ApexChart
         options={chartOptions}
         series={chartOptions.series}
