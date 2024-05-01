@@ -29,7 +29,8 @@ export default function HistoricalPriceChart() {
   };
 
   const reducedData = useMemo(
-    () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
+    () => historicalPriceData ?? [],
+    // () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
     [historicalPriceData]
   );
 

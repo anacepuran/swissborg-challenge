@@ -1,4 +1,3 @@
-"use client";
 import { getSupplyChartOptions } from "@/utils/chartConfiguration";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats } from "@/utils/types";
@@ -12,18 +11,18 @@ interface MyComponentProps {
 
 export const SupplyChart: React.FC<MyComponentProps> = ({ stats }) => {
   const series = useMemo(() => {
-    const seriesComputed = stats
+    return stats
       ? STATS_TO_DISPLAY.map((stat) => stats[stat.attrName + "Tokens"])
       : [];
-    const labelsComputed = stats
-      ? STATS_TO_DISPLAY.map((stat) => stat.chartLabel)
-      : [];
-    return { series: seriesComputed, labels: labelsComputed };
+  }, [stats]);
+  const labels = useMemo(() => {
+    return stats ? STATS_TO_DISPLAY.map((stat) => stat.chartLabel) : [];
   }, [stats]);
 
-  const chartOptions = useMemo(() => {
-    return getSupplyChartOptions(series);
-  }, [series]);
+  const chartOptions = useMemo(
+    () => getSupplyChartOptions(series, labels),
+    [labels, series]
+  );
 
   if (!stats) return;
 
@@ -31,8 +30,8 @@ export const SupplyChart: React.FC<MyComponentProps> = ({ stats }) => {
     <div className="supply-chart-wrapper" id="chart">
       <ApexChart
         type="donut"
-        options={chartOptions}
         series={chartOptions.series}
+        options={chartOptions}
         height={320}
       />
     </div>

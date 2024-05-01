@@ -36,12 +36,12 @@ export function getHistoricalChartOptions(
       axisTicks: { show: false },
       tickPlacement: "between",
       floating: true,
+      tooltip: { enabled: false },
       labels: {
         style: { fontWeight: 100, fontSize: "11px" },
         format: getDateFormat(selectedPeriod, true), // Chartview format
         offsetY: -10,
       },
-      tooltip: { enabled: false },
     },
     yaxis: {
       floating: true,
@@ -73,28 +73,20 @@ export function getHistoricalChartOptions(
     grid: {
       show: true,
       borderColor: "rgba(255,255,255,.05)",
-      padding: {
-        left: -5,
-        right: -5,
-      },
+      padding: { left: -5, right: -5 },
     },
     responsive: [
       {
         breakpoint: 786,
         options: {
-          chart: {
-            width: 300,
-          },
+          chart: { width: 300 },
         },
       },
     ],
   };
 }
 
-export function getSupplyChartOptions(series: {
-  series: number[];
-  labels: string[];
-}) {
+export function getSupplyChartOptions(series: number[], labels: string[]) {
   return {
     chart: {
       type: "donut",
@@ -102,8 +94,8 @@ export function getSupplyChartOptions(series: {
       toolbar: { show: false },
       dropShadow: { enabled: true, opacity: 0.2 },
     },
-    series: series.series,
-    labels: series.labels,
+    series: series,
+    labels: labels,
     plotOptions: {
       pie: {
         expandOnClick: false,
