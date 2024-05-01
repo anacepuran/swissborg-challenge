@@ -6,7 +6,10 @@ const nextConfig = {
   webpack: (config, options) => {
     if (config.optimization.splitChunks) {
       // Set the minSize property for splitChunks
-      config.optimization.splitChunks.minSize = 50000; // size in bytes
+      config.optimization.splitChunks.cacheGroups.commons = {
+        test: /[\\/]node_modules[\\/]/,
+        chunks: "all",
+      }; // size in bytes
     }
     return config;
   },
