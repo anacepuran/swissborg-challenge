@@ -16,6 +16,7 @@ export function getHistoricalChartOptions(
       toolbar: { show: false },
       zoom: { enabled: false },
       background: "rgba(25, 30, 41, 0.9)",
+      animations: { enabled: false },
     },
     series: [
       {
@@ -93,6 +94,7 @@ export function getSupplyChartOptions(series: number[], labels: string[]) {
       fontFamily: "TT Commons, sans-serif",
       toolbar: { show: false },
       dropShadow: { enabled: true, opacity: 0.2 },
+      animations: { enabled: false },
     },
     series: series,
     labels: labels,
