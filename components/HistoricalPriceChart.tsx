@@ -26,20 +26,22 @@ export default function HistoricalPriceChart() {
     setSelectedPeriod(selected);
   };
 
-  // Assuming historicalPriceData is an array of HistoricalPrice objects
+  const reducedData = useMemo(
+    () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
+    [historicalPriceData]
+  );
+
   const chartData: ChartData = useMemo(() => {
-    const reducedData =
-      historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [];
     const [series, categories] = reducedData.reduce(
       ([series, categories], { price, timestamp }: HistoricalPrice) => {
         series.push(price);
         categories.push(timestamp);
         return [series, categories];
       },
-      [[], []] as [number[], string[]] // Specify initial values and types for destructuring
+      [[], []] as [number[], string[]]
     );
     return { series, categories };
-  }, [historicalPriceData]);
+  }, [reducedData]);
 
   const chartOptions = useMemo(() => {
     if (!chartData) return {};
@@ -52,9 +54,9 @@ export default function HistoricalPriceChart() {
     <div className="historical-chart-wrapper">
       <PriceInformation />
       <ApexChart
-        options={chartOptions}
-        series={chartOptions.series}
         type="area"
+        series={chartOptions.series}
+        options={chartOptions}
         height={140}
         width={520}
       />
@@ -62,13 +64,13 @@ export default function HistoricalPriceChart() {
         {HISTORICAL_PERIOD_OPTIONS.map((option, index) => {
           return (
             <button
+              key={option.displayName}
+              onClick={() => handlePeriodSelection(option.name)}
               className={`historical-chart-button ${
                 option.name === selectedPeriod && "button-selected"
               } ${index === 0 && "button-first"} ${
                 index === 3 && "button-last"
-              }`}
-              key={option.displayName}
-              onClick={() => handlePeriodSelection(option.name)}>
+              }`}>
               {option.displayName}
             </button>
           );

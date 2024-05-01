@@ -1,6 +1,4 @@
 import dynamic from "next/dynamic";
-// import HistoricalPriceChart from "../components/HistoricalPriceChart";
-
 const BreakdownChart = dynamic(() => import("../components/BreakdownChart"), {
   ssr: false,
 });

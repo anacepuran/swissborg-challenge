@@ -5,11 +5,8 @@ import { Price } from "../utils/types";
 import { getPriceColor } from "../utils/utils";
 
 export default function PriceInformation() {
-  const {
-    data: priceInformation,
-    loading: informationLoading,
-    error: informationError,
-  } = useFetchData<Record<string, Price>>("price");
+  const { data: priceInformation } =
+    useFetchData<Record<string, Price>>("price");
 
   const price = useMemo(
     () => (priceInformation ? priceInformation["usd"].price?.toFixed(3) : null),
@@ -31,12 +28,20 @@ export default function PriceInformation() {
         />
         {priceInformation && (
           <div className="font-light text-left">
-            <p>USD {price ? price.toString() : <div className="loader" />}</p>
+            <p>
+              USD{" "}
+              {price ? (
+                priceInformation["usd"].price?.toFixed(3)
+              ) : (
+                <div className="loader" />
+              )}
+            </p>
             {change && (
               <p
                 className="text-primary text-sm"
                 style={{ color: getPriceColor(change) }}>
-                {change}% <span className="text-primary">24 Hours</span>
+                {priceInformation["usd"].change24h}%{" "}
+                <span className="text-primary">24 Hours</span>
               </p>
             )}
           </div>
