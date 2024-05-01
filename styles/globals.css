@@ -4,28 +4,12 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
   --primary-color: #01C38D;
   --primary-text-color: #01C38D;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
 }
 
 .separator {
@@ -44,16 +28,43 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 240px;
+  height: 244px;
   width: 520px;
   background-color: rgba(25, 30, 41, 0.9);
   border-radius: 10px;
   box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
+.historical-chart-header {
+  width: 100%;
+  padding: .5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px 10px 0 0;
+}
+
+.historical-chart-button {
+  width: 100%;
+  height: 1.6rem;
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.historical-chart-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #01c38d;
+}
+.button-selected {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #01c38d;
+}
+.historical-chart-button:active {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #01c38d;
+}
+.button-first { border-radius: 0 0 0 10px }
+.button-last { border-radius: 0 0 10px 0 }
+
 
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
   .historical-chart-wrapper {
     height: 240px;
     width: 300px;
@@ -66,6 +77,9 @@ body {
   }
 }
 
+.text-primary {
+  color: var(--primary-text-color)
+}
 
 @font-face {
   font-family: 'TT Commons';
@@ -79,9 +93,4 @@ body {
   src: url('/fonts/TT-Commons-Light.otf') format('opentype');
   font-weight: 'light';
   font-display: swap;
-}
-
-
-.text-primary {
-  color: var(--primary-text-color)
 }

@@ -6,7 +6,7 @@ export default function Page() {
     <main style={{ fontFamily: "TT Commons, sans-serif" }}>
       <div className="flex flex-col gap-8 min-h-screen items-center w-full bg-white h-full">
         <div
-          className="w-full flex flex-col gap-8 p-12 items-center text-center"
+          className="w-full flex flex-col gap-8 p-12 items-center text-center text-white"
           style={{
             backgroundImage:
               "linear-gradient(to bottom right, #191e29, #364053)",

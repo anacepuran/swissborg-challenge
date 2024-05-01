@@ -28,12 +28,12 @@ export function getHistoricalChartOptions(
 
     xaxis: {
       type: "datetime",
+
       crosshairs: {
         show: true,
         stroke: {
-          color: "#888", // Customize the color of the crosshair line
-          width: 1, // Customize the width of the crosshair line
-          dashArray: 0, // Disable dash array
+          color: "#888",
+          width: 1,
         },
         position: "back",
       },
@@ -46,15 +46,9 @@ export function getHistoricalChartOptions(
         style: { fontWeight: 100, fontSize: "11px" },
       },
       tickAmount: 5,
-      // tooltip: {
-      //   // enabled: false,
-      //   formatter: function (val, opts) {
-      //     return val + "...";
-      //   },
-      //   style: {
-      //     fontSize: "10px",
-      //   },
-      // },
+      tooltip: {
+        enabled: false,
+      },
     },
     yaxis: {
       floating: true,
@@ -68,7 +62,7 @@ export function getHistoricalChartOptions(
 
     tooltip: {
       theme: "dark", // Set tooltip theme
-      marker: { show: false },
+      marker: { show: false, fillColors: ["white"] },
       x: { format: "dd MMM yyyy" },
     },
 

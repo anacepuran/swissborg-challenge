@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 import { getHistoricalChartOptions } from "../../utils/chartConfiguration";
 import { HISTORICAL_PERIOD_OPTIONS } from "../../utils/configuration";
 import { HistoricalPricePeriod, Price } from "../../utils/types";
@@ -13,6 +12,7 @@ const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 export default function HistoricalPriceChart() {
   const [selectedPeriod, setSelectedPeriod] = useState("day");
   const [priceInformation, setPriceInformation] = useState<Price | null>(null);
+
   useEffect(() => {
     const fetchDataAsync = async () => {
       const res = await getPriceInformation();
@@ -53,17 +53,17 @@ export default function HistoricalPriceChart() {
 
   return (
     <div className="historical-chart-wrapper">
-      <ChartHeader className="flex gap-3">
+      <div className="historical-chart-header flex gap-3">
         <Image
           src={"icons/usd-to-borg.svg"}
           alt={"usd-to-borg"}
-          width={40}
-          height={40}
+          width={32}
+          height={32}
           style={{ width: "4rem", height: "auto" }}
         />
         {priceInformation && (
           <div className="font-light text-left">
-            <p></p>
+            <p>USD {priceInformation.price.toFixed(3)}</p>
             <p
               className="text-primary text-sm"
               style={{ color: getPriceColor(priceInformation?.change24h) }}>
@@ -72,9 +72,8 @@ export default function HistoricalPriceChart() {
             </p>
           </div>
         )}
-      </ChartHeader>
+      </div>
       <div className="separator" />
-      <div className="h-full"></div>
       <ApexChart
         options={chartOptions}
         series={chartOptions.series}
@@ -85,49 +84,19 @@ export default function HistoricalPriceChart() {
       <div className="grid w-full max-w-5xl grid-cols-4 text-center font-light">
         {HISTORICAL_PERIOD_OPTIONS.map((option, index) => {
           return (
-            <StyledButton
+            <button
+              className={`historical-chart-button ${
+                option.name === selectedPeriod && "button-selected"
+              } ${index === 0 && "button-first"} ${
+                index === 3 && "button-last"
+              }`}
               key={option.displayName}
-              $index={index}
-              $isActive={option.name === selectedPeriod}
               onClick={() => handlePeriodSelection(option.name)}>
               {option.displayName}
-            </StyledButton>
+            </button>
           );
         })}
       </div>
     </div>
   );
 }
-
-const ChartWrapper = styled.div``;
-
-const StyledButton = styled.button<{ $isActive: boolean; $index: number }>`
-  width: 100%;
-  height: 1.6rem;
-  font-size: 12px;
-
-  background-color: ${({ $isActive }) =>
-    $isActive ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.1)"};
-
-  color: ${({ $isActive }) => ($isActive ? "#01c38d" : "white")};
-
-  border-radius: ${({ $index }) =>
-    $index === 0 ? "0 0 0 10px" : $index === 3 ? "0 0 10px 0" : "0"};
-
-  &:hover,
-  &:focus {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #01c38d;
-  }
-  &:active {
-    background-color: rgba(255, 255, 255, 0.25);
-    color: #01c38d;
-  }
-`;
-
-const ChartHeader = styled.div`
-  width: 100%;
-  padding: 1rem 1rem 0.6rem 0.6rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px 10px 0 0;
-`;
