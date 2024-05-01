@@ -1,40 +1,37 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { getHistoricalChartOptions } from "../../utils/chartConfiguration";
 import { HISTORICAL_PERIOD_OPTIONS } from "../../utils/configuration";
 import { HistoricalPricePeriod, Price } from "../../utils/types";
 import { getPriceColor } from "../../utils/utils";
-import { getHistoricalData, getPriceInformation } from "../api/getters";
+import { useFetchData } from "../api/fetch";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function HistoricalPriceChart() {
   const [selectedPeriod, setSelectedPeriod] = useState("day");
-  const [priceInformation, setPriceInformation] = useState<Price | null>(null);
 
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      const res = await getPriceInformation();
-      setPriceInformation(res["usd"]);
-    };
-    fetchDataAsync();
-  }, []);
+  const {
+    data: historicalPriceData,
+    loading,
+    error,
+  } = useFetchData<HistoricalPricePeriod>("historical-price/" + selectedPeriod);
 
-  const [historicalPriceData, setHistoricalPriceData] =
-    useState<HistoricalPricePeriod | null>(null);
+  const {
+    data: priceInformation,
+    loading: informationLoading,
+    error: informationError,
+  } = useFetchData<Price>("price");
+
+  const data = useMemo(() => {
+    console.log(historicalPriceData);
+    console.log(priceInformation);
+  }, [historicalPriceData, priceInformation]);
 
   const handlePeriodSelection = (selected: string) => {
     setSelectedPeriod(selected);
   };
-
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      const res = await getHistoricalData(selectedPeriod);
-      setHistoricalPriceData(res);
-    };
-    fetchDataAsync();
-  }, [selectedPeriod]);
 
   const series = useMemo(() => {
     const reducedData = historicalPriceData?.filter((item, i) => i % 10 === 0);
@@ -49,7 +46,7 @@ export default function HistoricalPriceChart() {
     return getHistoricalChartOptions(series.series, series.categories);
   }, [series]);
 
-  if (!historicalPriceData || !priceInformation) return;
+  if (!series || !priceInformation) return;
 
   return (
     <div className="historical-chart-wrapper">
@@ -63,7 +60,7 @@ export default function HistoricalPriceChart() {
         />
         {priceInformation && (
           <div className="font-light text-left">
-            <p>USD {priceInformation.price.toFixed(3)}</p>
+            <p>USD {priceInformation?.price?.toFixed(3)}</p>
             <p
               className="text-primary text-sm"
               style={{ color: getPriceColor(priceInformation?.change24h) }}>

@@ -2,18 +2,14 @@ import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats } from "@/utils/types";
 import { formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getBorgStats } from "../api/getters";
+import { useFetchData } from "../api/fetch";
 
 export default function Breakdown() {
-  const [borgStats, setBorgStats] = useState<BorgStats | null>(null);
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      const res = await getBorgStats();
-      setBorgStats(res);
-    };
-    fetchDataAsync();
-  }, []);
+  const {
+    data: borgStats,
+    loading,
+    error,
+  } = useFetchData<BorgStats>("borg-stats");
 
   const BorgStatRow = (row: any) => {
     if (!borgStats) return;
@@ -25,12 +21,13 @@ export default function Breakdown() {
     );
     return (
       <>
-        <div className="flex gap-2" key={row.attrName}>
+        <div className="flex gap-2">
           <Image
             src={"icons/" + row.icon}
             alt={`${row.title} - Icon`}
-            width={40}
-            height={40}
+            width={32}
+            height={32}
+            style={{ width: "2.6rem", height: "auto" }}
           />
           <div className="flex flex-col lg:flex-row gap-0 lg:gap-3 w-full justify-between lg:items-center flex-col-reverse">
             <p className="text-lg lg:text-xl font-light text-left">
@@ -47,7 +44,7 @@ export default function Breakdown() {
             </div>
           </div>
         </div>
-        <div className="separator" style={{ margin: "8px 0 8px 0" }} />
+        <div className="separator mt-2 mb-2" />
       </>
     );
   };
@@ -59,7 +56,7 @@ export default function Breakdown() {
       <div className="max-w-sm lg:max-w-md flex flex-col justify-center">
         {borgStats &&
           STATS_TO_DISPLAY.map((stat) => {
-            return <>{BorgStatRow(stat)}</>;
+            return <div key={stat.attrName}>{BorgStatRow(stat)}</div>;
           })}
       </div>
       <div>CHART</div>

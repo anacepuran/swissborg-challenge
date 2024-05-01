@@ -1,31 +1,31 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
+
 const API_URL = "https://borg-api-techchallenge.swissborg-stage.com/api";
 
-interface ApiResponse<T> {
-  data: T;
-}
+export function useFetchData<T>(endpoint: string): {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+} {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
-export default async function fetchData<T>(endpoint: string): Promise<T> {
-  try {
-    const response = await axios.get<ApiResponse<T>>(`${API_URL}/${endpoint}`);
-    return response.data as T;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw new Error("Error fetching data");
-  }
+  useEffect(() => {
+    const fetchDataAsync = async () => {
+      try {
+        console.log(`${API_URL}/${endpoint}`);
+        const response = await axios.get<T>(`${API_URL}/${endpoint}`);
+        setData(response.data);
+      } catch (error) {
+        setError(new Error("Error fetching data"));
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDataAsync();
+  }, [endpoint]);
 
-  try {
-    const response = await axios.get<ApiResponse<T>>(`${API_URL}/${endpoint}`, {
-      headers: {
-        // Prevent caching by adding cache-control headers
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
-    });
-    return response.data.data; // Assuming API response structure wraps data in a "data" property
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw new Error("Error fetching data");
-  }
+  return { data: data, loading: loading, error: error };
 }

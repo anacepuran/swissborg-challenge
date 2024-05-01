@@ -36,8 +36,8 @@ export default function App({ Component, pageProps }: AppProps) {
           cardType: "summary_large_image",
         }}
       />
-      <meta name="twitter:title" content={TITLE} />
-      <meta name="twitter:description" content={DESCRIPTION} />
+      {/* <meta name="twitter:title" content={TITLE} />
+      <meta name="twitter:description" content={DESCRIPTION} /> */}
       <meta property="twitter:image" content={IMAGE_URL} />
       <meta property="twitter:image:width" content="1200" />
       <meta property="twitter:image:height" content="630" />
