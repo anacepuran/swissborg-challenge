@@ -15,12 +15,9 @@ type ChartData = {
 
 export default function HistoricalPriceChart() {
   const [selectedPeriod, setSelectedPeriod] = useState("day");
-
-  const {
-    data: historicalPriceData,
-    loading,
-    error,
-  } = useFetchData<HistoricalPricePeriod>("historical-price/" + selectedPeriod);
+  const { data: historicalPriceData } = useFetchData<HistoricalPricePeriod>(
+    "historical-price/" + selectedPeriod
+  );
 
   const handlePeriodSelection = (selected: string) => {
     setSelectedPeriod(selected);

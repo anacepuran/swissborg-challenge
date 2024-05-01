@@ -5,20 +5,10 @@ import Image from "next/image";
 import { useFetchData } from "../api/fetch";
 
 export default function Breakdown() {
-  const {
-    data: borgStats,
-    loading,
-    error,
-  } = useFetchData<BorgStats>("borg-stats");
+  const { data: borgStats } = useFetchData<BorgStats>("borg-stats");
 
   const BorgStatRow = (row: any) => {
     if (!borgStats) return;
-    const numberOfTokens = formatNumberWithCommas(
-      borgStats[row.attrName + "Tokens"]
-    );
-    const percentageOfTokens = formatNumberWithCommas(
-      borgStats[row.attrName + "Percentage"]
-    );
     return (
       <>
         <div className="flex gap-2">
@@ -34,12 +24,16 @@ export default function Breakdown() {
               {row.title}
             </p>
             <div className="flex flex-col text-primary text-left lg:text-right">
-              <p className="text-xl font-bold">{numberOfTokens}</p>
+              <p className="text-xl font-bold">
+                {formatNumberWithCommas(borgStats[row.attrName + "Tokens"])}
+              </p>
               {row.showPercentage && (
                 <div className="text-md font-light">
                   (
                   <span className="font-bold red-text-shadow">
-                    {percentageOfTokens}
+                    {formatNumberWithCommas(
+                      borgStats[row.attrName + "Percentage"]
+                    )}
                   </span>
                   % of Circulating supply)
                 </div>

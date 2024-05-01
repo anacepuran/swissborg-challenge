@@ -28,20 +28,12 @@ export default function PriceInformation() {
         />
         {priceInformation && (
           <div className="font-light text-left">
-            <p>
-              USD{" "}
-              {price ? (
-                priceInformation["usd"].price?.toFixed(3)
-              ) : (
-                <div className="loader" />
-              )}
-            </p>
+            <p>USD {price ?? <div className="loader" />}</p>
             {change && (
               <p
                 className="text-primary text-sm"
                 style={{ color: getPriceColor(change) }}>
-                {priceInformation["usd"].change24h}%{" "}
-                <span className="text-primary">24 Hours</span>
+                {change}% <span className="text-primary">24 Hours</span>
               </p>
             )}
           </div>
