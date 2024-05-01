@@ -4,8 +4,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --primary-color: #00a979;
-  --primary-text-color: #00a979;
+  --primary-color: #01c38d;
+  --primary-text-color: #01c38d;
 }
 
 body {
@@ -63,6 +63,19 @@ body {
 .button-first { border-radius: 0 0 0 10px }
 .button-last { border-radius: 0 0 10px 0 }
 
+.banner {
+  width: 100%;
+  min-height: 52vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+  padding:4rem;
+  background-image: linear-gradient(to bottom right, #191e29, #364053);
+  color:white;
+}
+
 
 @media only screen and (max-width: 768px) {
   .historical-chart-wrapper {
@@ -93,6 +106,9 @@ body {
   src: url('/fonts/TT-Commons-Light.otf') format('opentype');
   font-weight: 'light';
   font-display: swap;
+}
+.red-text-shadow {
+  text-shadow: rgba(0,0,0,0.3) 0.1px -0.1px 2px;
 }
 .loader {
   width: 12px;

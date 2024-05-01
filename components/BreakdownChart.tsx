@@ -37,8 +37,11 @@ export default function Breakdown() {
               <p className="text-xl font-bold">{numberOfTokens}</p>
               {row.showPercentage && (
                 <div className="text-md font-light">
-                  (<span className="font-bold">{percentageOfTokens}</span>% of
-                  Circulating supply)
+                  (
+                  <span className="font-bold red-text-shadow">
+                    {percentageOfTokens}
+                  </span>
+                  % of Circulating supply)
                 </div>
               )}
             </div>

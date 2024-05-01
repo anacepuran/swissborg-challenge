@@ -4,12 +4,7 @@ import HistoricalPriceChart from "../components/HistoricalPriceChart";
 export default function Page() {
   return (
     <div className="flex flex-col gap-8 min-h-screen items-center w-full bg-white h-full">
-      <div
-        className="w-full flex flex-col gap-8 p-12 items-center text-center text-white"
-        style={{
-          backgroundImage: "linear-gradient(to bottom right, #191e29, #364053)",
-          minHeight: "52vh",
-        }}>
+      <div className="banner">
         <h1 className="text-4xl lg:text-6xl font-bold">BORG Token Metrics</h1>
         <p className="font-light">
           Deep-dive into the statistics of BORG and the mechanics of the full
