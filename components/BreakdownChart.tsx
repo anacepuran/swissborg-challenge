@@ -30,7 +30,7 @@ export default function Breakdown() {
               {row.showPercentage && (
                 <div className="text-md font-light">
                   (
-                  <span className="font-bold red-text-shadow">
+                  <span className="font-bold">
                     {formatNumberWithCommas(
                       borgStats[row.attrName + "Percentage"]
                     )}

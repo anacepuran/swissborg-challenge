@@ -5,7 +5,7 @@ const API_URL = "https://borg-api-techchallenge.swissborg-stage.com/api";
 
 export function useFetchData<T>(
   endpoint: string,
-  reduceData?: boolean
+  enableCaching?: boolean
 ): {
   data: T | null;
 } {
@@ -14,14 +14,25 @@ export function useFetchData<T>(
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
-        const response = await axios.get<T>(`${API_URL}/${endpoint}`);
-        setData(response.data);
+        if (enableCaching) {
+          const cachedItem = localStorage.getItem(endpoint);
+          if (cachedItem) {
+            setData(JSON.parse(cachedItem));
+          } else {
+            const response = await axios.get<T>(`${API_URL}/${endpoint}`);
+            setData(response.data);
+            localStorage.setItem(endpoint, JSON.stringify(response.data));
+          }
+        } else {
+          const response = await axios.get<T>(`${API_URL}/${endpoint}`);
+          setData(response.data);
+        }
       } catch (error) {
         console.error("Error fetching data");
       }
     };
     fetchDataAsync();
-  }, [endpoint]);
+  }, [enableCaching, endpoint]);
 
   return { data: data };
 }

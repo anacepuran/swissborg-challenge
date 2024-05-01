@@ -3,7 +3,11 @@ import { useMemo, useState } from "react";
 import { useFetchData } from "../api/fetch";
 import { getHistoricalChartOptions } from "../utils/chartConfiguration";
 import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPrice, HistoricalPricePeriod } from "../utils/types";
+import {
+  HistoricalPeriod,
+  HistoricalPrice,
+  HistoricalPricePeriod,
+} from "../utils/types";
 import PriceInformation from "./PriceInformation";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -14,12 +18,13 @@ type ChartData = {
 };
 
 export default function HistoricalPriceChart() {
-  const [selectedPeriod, setSelectedPeriod] = useState("day");
+  const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
   const { data: historicalPriceData } = useFetchData<HistoricalPricePeriod>(
-    "historical-price/" + selectedPeriod
+    "historical-price/" + selectedPeriod,
+    true // Cache enabled
   );
 
-  const handlePeriodSelection = (selected: string) => {
+  const handlePeriodSelection = (selected: HistoricalPeriod) => {
     setSelectedPeriod(selected);
   };
 
@@ -42,7 +47,11 @@ export default function HistoricalPriceChart() {
 
   const chartOptions = useMemo(() => {
     if (!chartData) return {};
-    return getHistoricalChartOptions(chartData.series, chartData.categories);
+    return getHistoricalChartOptions(
+      chartData.series,
+      chartData.categories,
+      selectedPeriod
+    );
   }, [chartData]);
 
   if (!chartData) return;

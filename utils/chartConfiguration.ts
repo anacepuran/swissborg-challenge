@@ -1,8 +1,11 @@
 import { ApexOptions } from "apexcharts";
+import { HistoricalPeriod } from "./types";
+import { getDateFormat } from "./utils";
 
 export function getHistoricalChartOptions(
   series: number[],
-  xaxisCategories: string[] | undefined
+  xaxisCategories: string[] | undefined,
+  selectedPeriod: HistoricalPeriod
 ): ApexOptions {
   return {
     chart: {
@@ -14,45 +17,30 @@ export function getHistoricalChartOptions(
       zoom: { enabled: false },
       background: "rgba(25, 30, 41, 0.9)",
     },
-    noData: {
-      text: "No data to display.",
-      offsetY: -10,
-    },
     series: [
       {
         name: "USD to BORG",
         data: series,
       },
     ],
-
-    markers: {
-      size: 0,
-    },
     dataLabels: { enabled: false },
-
+    noData: {
+      text: "No data to display.",
+      offsetY: -10,
+    },
     xaxis: {
       type: "datetime",
-
-      crosshairs: {
-        show: true,
-        stroke: {
-          color: "#888",
-          width: 1,
-        },
-        position: "back",
-      },
       categories: xaxisCategories,
-      position: "bottom",
-      floating: false,
+      crosshairs: { show: true },
       axisBorder: { show: false },
       axisTicks: { show: false },
+      floating: true,
       labels: {
         style: { fontWeight: 100, fontSize: "11px" },
+        format: getDateFormat(selectedPeriod, true), // Chartview format
+        offsetY: -10,
       },
-      tickAmount: 5,
-      tooltip: {
-        enabled: false,
-      },
+      tooltip: { enabled: false },
     },
     yaxis: {
       floating: true,
@@ -61,15 +49,13 @@ export function getHistoricalChartOptions(
       opposite: true,
       decimalsInFloat: 2,
       tickAmount: 5,
-      labels: { offsetX: 40, style: { fontWeight: 100, fontSize: "11px" } },
+      labels: { offsetX: 36, offsetY: -6, style: { fontWeight: "bold" } },
     },
-
     tooltip: {
-      theme: "dark", // Set tooltip theme
+      theme: "dark",
       marker: { show: false, fillColors: ["white"] },
-      x: { format: "dd MMM yyyy" },
+      x: { format: getDateFormat(selectedPeriod) },
     },
-
     fill: {
       colors: ["#01C38D"],
       type: "gradient",
@@ -81,10 +67,8 @@ export function getHistoricalChartOptions(
     stroke: {
       colors: ["rgba(1, 195, 141, 1)"],
       curve: "smooth",
-      lineCap: "round",
       width: 1,
     },
-
     grid: {
       show: true,
       borderColor: "rgba(255,255,255,.05)",
@@ -102,23 +86,6 @@ export function getHistoricalChartOptions(
           },
         },
       },
-
-      // {
-      //   breakpoint: 600,
-      //   options: {
-      //     chart: {
-      //       width: 400,
-      //     },
-      //   },
-      // },
-      // {
-      //   breakpoint: 600,
-      //   options: {
-      //     chart: {
-      //       width: 400,
-      //     },
-      //   },
-      // },
     ],
   };
 }

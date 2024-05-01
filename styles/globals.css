@@ -22,11 +22,6 @@ body {
   height: 1px;
   width: 100%;
   opacity: 0.4;
-
-  /* background-color: #fff;
-  height: 1px;
-  width: 100%;
-  opacity: 0.3; */
 }
 
 .historical-chart-wrapper {
@@ -89,12 +84,6 @@ body {
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 .text-primary {
   color: var(--primary-text-color)
 }
@@ -112,9 +101,7 @@ body {
   font-weight: 'light';
   font-display: swap;
 }
-.red-text-shadow {
-  text-shadow: rgba(0,0,0,0.3) 0.1px -0.1px 2px;
-}
+
 .loader {
   width: 12px;
   height: 12px;
