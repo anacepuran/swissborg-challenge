@@ -2,20 +2,12 @@ import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats } from "@/utils/types";
 import { formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
-import { useMemo } from "react";
 
 interface BreakdownProps {
   borgStats: BorgStats;
 }
 export default function Breakdown({ borgStats }: BreakdownProps) {
-  // const { data: borgStats } = useFetchData<BorgStats>("borg-stats");
-  const stats = useMemo(() => {
-    console.log("BORG STATS");
-    console.log(borgStats);
-  }, [borgStats]);
-
   const BorgStatRow = (row: any) => {
-    if (!borgStats) return;
     const tokens = formatNumberWithCommas(borgStats[row.attrName + "Tokens"]);
     const percentage = formatNumberWithCommas(
       borgStats[row.attrName + "Percentage"]
