@@ -6,7 +6,7 @@ type ChartData = {
   reducedData: HistoricalPricePeriod;
 };
 export function AreaChart({ reducedData }: ChartData) {
-  console.log(reducedData);
+  //   console.log(reducedData);
   const formattedChartData = useMemo(() => {
     const data = reducedData?.map((item) => [
       new Date(item.timestamp).getTime(),
@@ -31,6 +31,7 @@ export function AreaChart({ reducedData }: ChartData) {
     },
     plotOptions: {
       area: {
+        animation: false,
         color: "#01C38D",
         fillColor: {
           linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
