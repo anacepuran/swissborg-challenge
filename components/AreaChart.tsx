@@ -1,6 +1,9 @@
 import { HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HighchartsBoost from "highcharts/modules/boost";
+HighchartsBoost(Highcharts);
+
 import { useMemo } from "react";
 type ChartData = {
   reducedData: HistoricalPricePeriod;
