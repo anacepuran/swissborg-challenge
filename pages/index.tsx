@@ -1,6 +1,7 @@
 import BreakdownChart from "@/components/BreakdownChart";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats, PieChartData } from "@/utils/types";
+import { formatPieChartLabel } from "@/utils/utils";
 
 // const BreakdownChart = dynamic(() => import("../components/BreakdownChart"), {
 //   ssr: false,
@@ -25,7 +26,7 @@ export const getServerSideProps = async () => {
   const dataForPieChart: PieChartData[] = STATS_TO_DISPLAY.map(
     (stat) =>
       ({
-        name: stat.chartLabel,
+        name: formatPieChartLabel(stat.chartLabel, stat.color),
         y: borgStats[stat.attrName + "Tokens"],
         color: stat.color,
       } as PieChartData)

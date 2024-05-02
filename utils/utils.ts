@@ -20,3 +20,10 @@ export function getDateFormat(period: HistoricalPeriod, chartView?: boolean) {
       return chartView ? "MMM yy" : "dd MMM yy";
   }
 }
+
+export function formatPieChartLabel(name: string, color: string) {
+  return `<div style="display:flex; align-items: center;">
+            <div style="background: ${color}; width: 20px; height: 20px; border-radius: 10px; margin-right: 5px; box-shadow: -0.5px 0.5px 2px #2f2f2f;"></div>
+            ${name}
+          </div>`;
+}

@@ -16,17 +16,27 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
     title: "",
     chart: {
       type: "pie",
+      style: {
+        fontFamily: "TT Commons, sans-serif",
+        fontWeight: "light",
+        fontSize: "18px",
+      },
     },
     plotOptions: {
       series: {
         animation: false,
         borderWidth: 0,
       },
-      pie: { innerSize: "80%", borderRadius: 0 },
+      pie: { innerSize: "80%", borderRadius: 0, size: "85%" },
     },
     series: [
       {
         data: stats,
+        dataLabels: {
+          useHTML: true,
+          distance: 10,
+          connectorWidth: 0,
+        },
       },
     ],
   };
@@ -34,7 +44,7 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
   if (!stats) return;
 
   return (
-    <div className="supply-chart-wrapper" id="chart">
+    <div id="chart" className="supply-chart-wrapper">
       <PieChart highcharts={Highcharts} options={options} />
     </div>
   );
