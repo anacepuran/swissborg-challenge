@@ -20,6 +20,7 @@ export function AreaChart({ reducedData }: ChartData) {
       type: "area",
       height: 180,
       width: 520,
+      animation: false,
     },
     title: "",
     xAxis: {

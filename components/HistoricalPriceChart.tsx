@@ -60,7 +60,7 @@ export default function HistoricalPriceChart() {
     <div className="historical-chart-wrapper">
       <PriceInformation />
       <div className="flex items-center" style={{ height: "240px" }}>
-        {!chartData ? (
+        {!reducedData.length ? (
           <div className="loader-chart" />
         ) : (
           <AreaChart reducedData={reducedData} />
