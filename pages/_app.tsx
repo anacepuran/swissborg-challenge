@@ -1,11 +1,12 @@
 import "@/styles/globals.css";
+import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <title>BORG Token Metrics</title>
-      {/* <DefaultSeo
+      <DefaultSeo
         title={"SwissBorg - BORG Token Metrics"}
         description={
           "Deep-dive into the statistics of BORG and the mechanics of the full SwissBorg Ecosystem."
@@ -29,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
           site: "@site",
           cardType: "summary_large_image",
         }}
-      /> */}
+      />
       <meta name="twitter:title" content={"SwissBorg - BORG Token Metrics"} />
       <meta
         name="twitter:description"
