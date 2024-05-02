@@ -1,10 +1,11 @@
 import { PieChartData } from "@/utils/types";
 import Highcharts from "highcharts";
-import PieChart from "highcharts-react-official";
+import dynamic from "next/dynamic";
+// import PieChart from "highcharts-react-official";
 import React from "react";
-// const PieChart = dynamic(() => import("highcharts-react-official"), {
-//   ssr: false,
-// });
+const PieChart = dynamic(() => import("highcharts-react-official"), {
+  ssr: false,
+});
 
 interface SupplyChartProps {
   stats: PieChartData[];
@@ -17,7 +18,7 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
       type: "pie",
       style: {
         fontFamily: "TT Commons, sans-serif",
-        fontWeight: "light",
+        fontWeight: "normal",
         fontSize: "18px",
       },
     },
@@ -25,9 +26,9 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
       series: {
         animation: false,
         borderWidth: 0,
-        enableMouseTracking: true,
+        enableMouseTracking: false,
       },
-      pie: { innerSize: "80%", borderRadius: 0, size: "85%" },
+      pie: { innerSize: "80%", borderRadius: 0, size: "70%" },
     },
     series: [
       {
@@ -39,13 +40,38 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
         },
       },
     ],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 400,
+          },
+          chartOptions: {
+            chart: {
+              marginRight: 10,
+            },
+            plotOptions: {
+              pie: {
+                dataLabels: {
+                  distance: 5,
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   };
 
   if (!stats) return;
 
   return (
     <div id="chart" className="supply-chart-wrapper">
-      <PieChart highcharts={Highcharts} options={options} />
+      <PieChart
+        highcharts={Highcharts}
+        options={options}
+        containerProps={{ style: { height: "100%", width: "100%" } }}
+      />
     </div>
   );
 };
