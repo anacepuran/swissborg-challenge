@@ -55,7 +55,7 @@ export function getHistoricalChartOptions(
     },
     tooltip: {
       theme: "dark",
-      marker: { show: false, fillColors: ["white"] },
+      marker: { show: false },
       x: { format: getDateFormat(selectedPeriod) },
     },
     fill: {
