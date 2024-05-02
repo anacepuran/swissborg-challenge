@@ -1,23 +1,16 @@
-import { HistoricalPricePeriod } from "@/utils/types";
+import { ChartData } from "@/utils/types";
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import HighchartsBoost from "highcharts/modules/boost";
-HighchartsBoost(Highcharts);
+import AreaChart from "highcharts-react-official";
+import Boost from "highcharts/modules/boost";
 
-import { useMemo } from "react";
-type ChartData = {
-  reducedData: HistoricalPricePeriod;
-};
-export function AreaChart({ reducedData }: ChartData) {
-  //   console.log(reducedData);
-  const formattedChartData = useMemo(() => {
-    const data = reducedData?.map((item) => [
-      new Date(item.timestamp).getTime(),
-      item.price,
-    ]);
-    return data;
-  }, [reducedData]);
+if (typeof Highcharts === "object") {
+  Boost(Highcharts);
+}
 
+interface HistoricalChartProps {
+  reducedData: ChartData[];
+}
+export function HistoricalChart({ reducedData }: HistoricalChartProps) {
   const options = {
     title: "",
     chart: {
@@ -49,7 +42,7 @@ export function AreaChart({ reducedData }: ChartData) {
       {
         type: "area",
         name: "USD to BORG",
-        data: formattedChartData,
+        data: reducedData,
       },
     ],
     responsive: {
@@ -67,7 +60,7 @@ export function AreaChart({ reducedData }: ChartData) {
   };
   return (
     <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <AreaChart highcharts={Highcharts} options={options} />
     </div>
   );
 }

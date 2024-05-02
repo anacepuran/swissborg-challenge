@@ -6,11 +6,11 @@ import { SupplyChart } from "./SupplyChart";
 
 interface BreakdownProps {
   borgStats: BorgStats;
-  dataForPieChart: PieChartData[];
+  pieChartData: PieChartData[];
 }
-export default function Breakdown({
+export default function BorgBreakdown({
   borgStats,
-  dataForPieChart,
+  pieChartData,
 }: BreakdownProps) {
   const BorgStatRow = (row: any) => {
     const tokens = formatNumberWithCommas(borgStats[row.attrName + "Tokens"]);
@@ -60,7 +60,7 @@ export default function Breakdown({
           })}
       </div>
       <div className="pt-4">
-        {borgStats && <SupplyChart stats={dataForPieChart} />}
+        {borgStats && <SupplyChart stats={pieChartData} />}
       </div>
     </div>
   );

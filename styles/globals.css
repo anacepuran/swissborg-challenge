@@ -117,9 +117,3 @@
   justify-content: center;
   width: 100%;
 }
-.circle {
-  width:20px;
-  height:20px;
-  border-radius: 10px;
-  background: red;
-}

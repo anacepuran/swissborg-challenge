@@ -3,6 +3,10 @@ export interface HistoricalPrice {
   price: number;
 }
 
+export interface ChartData {
+  series: number[];
+  categories: string[];
+}
 export interface PieChartData {
   name: string;
   y: number;
