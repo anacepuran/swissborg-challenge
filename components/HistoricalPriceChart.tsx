@@ -33,7 +33,8 @@ export default function HistoricalPriceChart() {
     setSelectedPeriod(selected);
   };
 
-  const chartData: ChartData = useMemo(() => {
+  const chartData: ChartData | null = useMemo(() => {
+    if (!reducedData) return null;
     const [series, categories] = reducedData.reduce(
       ([series, categories], { price, timestamp }: HistoricalPrice) => {
         series.push(price);
@@ -54,19 +55,21 @@ export default function HistoricalPriceChart() {
     );
   }, [chartData, selectedPeriod]);
 
-  if (!chartData) return <div className="loader"></div>;
-
   return (
     <div className="historical-chart-wrapper">
       <PriceInformation />
-      <div style={{ height: "240px" }}>
-        <ApexChart
-          type="area"
-          series={chartOptions.series}
-          options={chartOptions}
-          height={140}
-          width={520}
-        />
+      <div className="flex items-center" style={{ height: "240px" }}>
+        {!chartData ? (
+          <div className="loader-chart" />
+        ) : (
+          <ApexChart
+            type="area"
+            series={chartOptions.series}
+            options={chartOptions}
+            height={140}
+            width={520}
+          />
+        )}
       </div>
       <div className="grid grid-cols-4 w-full">
         {HISTORICAL_PERIOD_OPTIONS.map((option, index) => {
