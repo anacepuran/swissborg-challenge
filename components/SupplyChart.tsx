@@ -1,11 +1,7 @@
 import { PieChartData } from "@/utils/types";
 import Highcharts from "highcharts";
-import dynamic from "next/dynamic";
-// import PieChart from "highcharts-react-official";
+import PieChart from "highcharts-react-official";
 import React from "react";
-const PieChart = dynamic(() => import("highcharts-react-official"), {
-  ssr: false,
-});
 
 interface SupplyChartProps {
   stats: PieChartData[];
