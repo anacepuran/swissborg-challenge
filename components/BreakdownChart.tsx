@@ -2,10 +2,17 @@ import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats } from "@/utils/types";
 import { formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
-import { useFetchData } from "../api/fetch";
+import { useMemo } from "react";
 
-export default function Breakdown() {
-  const { data: borgStats } = useFetchData<BorgStats>("borg-stats");
+interface BreakdownProps {
+  borgStats: BorgStats;
+}
+export default function Breakdown({ borgStats }: BreakdownProps) {
+  // const { data: borgStats } = useFetchData<BorgStats>("borg-stats");
+  const stats = useMemo(() => {
+    console.log("BORG STATS");
+    console.log(borgStats);
+  }, [borgStats]);
 
   const BorgStatRow = (row: any) => {
     if (!borgStats) return;

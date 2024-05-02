@@ -1,5 +1,6 @@
 import BreakdownChart from "@/components/BreakdownChart";
 import HistoricalPriceChart from "@/components/HistoricalPriceChart";
+import { BorgStats } from "@/utils/types";
 
 // const BreakdownChart = dynamic(() => import("../components/BreakdownChart"), {
 //   ssr: false,
@@ -9,7 +10,19 @@ import HistoricalPriceChart from "@/components/HistoricalPriceChart";
 //   { ssr: false }
 // );
 
-export default function Page() {
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+
+export const getServerSideProps = (async () => {
+  const res = await fetch(
+    "https://borg-api-techchallenge.swissborg-stage.com/api/borg-stats"
+  );
+  const props: BorgStats = await res.json();
+  return { props: { props } };
+}) satisfies GetServerSideProps<{ props: BorgStats }>;
+
+export default function Page({
+  props,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className="flex flex-col items-center">
       <div className="banner">
@@ -23,7 +36,7 @@ export default function Page() {
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
       </h2>
-      <BreakdownChart />
+      <BreakdownChart borgStats={props} />
     </div>
   );
 }

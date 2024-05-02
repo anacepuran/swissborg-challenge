@@ -16,26 +16,31 @@ export function AreaChart({ reducedData }: ChartData) {
   }, [reducedData]);
 
   const options = {
+    title: "",
     chart: {
       type: "area",
       height: 180,
       width: 520,
       animation: false,
     },
-    title: "",
     xAxis: {
       type: "datetime",
     },
     legend: {
       enabled: false,
     },
-    // plotOptions: {
-    //   area: {
-    //     fillColor: {
-    //       linearGradient: {},
-    //     },
-    //   },
-    // },
+    plotOptions: {
+      area: {
+        color: "#01C38D",
+        fillColor: {
+          linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
+          stops: [
+            [0, "rgba(255, 255, 255, 0)"],
+            [1, "#01C38D"],
+          ],
+        },
+      },
+    },
     series: [
       {
         type: "area",
@@ -55,7 +60,7 @@ export function AreaChart({ reducedData }: ChartData) {
         },
       ],
     },
-  } as Highcharts.Options;
+  };
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={options} />
