@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useFetchData } from "../api/fetch";
 import { getHistoricalChartOptions } from "../utils/chartConfiguration";
@@ -11,7 +10,7 @@ import {
 import { AreaChart } from "./AreaChart";
 import PriceInformation from "./PriceInformation";
 
-const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+// const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 type ChartData = {
   series: number[];
@@ -26,7 +25,8 @@ export default function HistoricalPriceChart() {
   );
 
   const reducedData = useMemo(
-    () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
+    () => historicalPriceData ?? [],
+    // () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
     [historicalPriceData]
   );
 
@@ -63,7 +63,7 @@ export default function HistoricalPriceChart() {
         {!chartData ? (
           <div className="loader-chart" />
         ) : (
-          <AreaChart />
+          <AreaChart reducedData={reducedData} />
           // <ApexChart
           //   type="area"
           //   series={chartOptions.series}

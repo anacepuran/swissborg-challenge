@@ -1,19 +1,45 @@
+import { HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { useMemo } from "react";
+type ChartData = {
+  reducedData: HistoricalPricePeriod;
+};
+export function AreaChart({ reducedData }: ChartData) {
+  console.log(reducedData);
+  const formattedChartData = useMemo(() => {
+    const data = reducedData?.map((item) => [
+      new Date(item.timestamp).getTime(),
+      item.price,
+    ]);
+    return data;
+  }, [reducedData]);
 
-export function AreaChart() {
   const options = {
     chart: {
-      type: "spline",
+      type: "area",
       height: 180,
       width: 520,
     },
-    title: {
-      text: "My chart",
+    title: "",
+    xAxis: {
+      type: "datetime",
     },
+    legend: {
+      enabled: false,
+    },
+    // plotOptions: {
+    //   area: {
+    //     fillColor: {
+    //       linearGradient: {},
+    //     },
+    //   },
+    // },
     series: [
       {
-        data: [1, 2, 1, 4, 3, 6],
+        type: "area",
+        name: "USD to BORG",
+        data: formattedChartData,
       },
     ],
     responsive: {
