@@ -84,7 +84,9 @@
   font-display: swap;
 }
 .text-primary {
-  color: var(--primary-color)
+  color: var(--primary-color);
+  text-shadow: -1px 0 black;
+  /* color: black; */
 }
 
 .loader {
