@@ -1,12 +1,17 @@
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
-import { BorgStats } from "@/utils/types";
+import { BorgStats, PieChartData } from "@/utils/types";
 import { formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
+import { SupplyChart } from "./SupplyChart";
 
 interface BreakdownProps {
   borgStats: BorgStats;
+  dataForPieChart: PieChartData[];
 }
-export default function Breakdown({ borgStats }: BreakdownProps) {
+export default function Breakdown({
+  borgStats,
+  dataForPieChart,
+}: BreakdownProps) {
   const BorgStatRow = (row: any) => {
     const tokens = formatNumberWithCommas(borgStats[row.attrName + "Tokens"]);
     const percentage = formatNumberWithCommas(
@@ -55,7 +60,7 @@ export default function Breakdown({ borgStats }: BreakdownProps) {
           })}
       </div>
       <div className="pt-4">
-        {/* {borgStats && <SupplyChart stats={borgStats} />} */}
+        {borgStats && <SupplyChart stats={dataForPieChart} />}
       </div>
     </div>
   );

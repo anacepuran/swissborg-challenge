@@ -1,38 +1,40 @@
-import { getSupplyChartOptions } from "@/utils/chartConfiguration";
-import { STATS_TO_DISPLAY } from "@/utils/configuration";
-import { BorgStats } from "@/utils/types";
-import React, { useMemo } from "react";
-// const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import { PieChartData } from "@/utils/types";
+import Highcharts from "highcharts";
+import PieChart from "highcharts-react-official";
+import React from "react";
+// const PieChart = dynamic(() => import("highcharts-react-official"), {
+//   ssr: false,
+// });
 
-interface MyComponentProps {
-  stats: BorgStats | null;
+interface SupplyChartProps {
+  stats: PieChartData[];
 }
 
-export const SupplyChart: React.FC<MyComponentProps> = ({ stats }) => {
-  const series = useMemo(() => {
-    return stats
-      ? STATS_TO_DISPLAY.map((stat) => stats[stat.attrName + "Tokens"])
-      : [];
-  }, [stats]);
-  const labels = useMemo(() => {
-    return stats ? STATS_TO_DISPLAY.map((stat) => stat.chartLabel) : [];
-  }, [stats]);
-
-  const chartOptions = useMemo(
-    () => getSupplyChartOptions(series, labels),
-    [labels, series]
-  );
+export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
+  const options = {
+    title: "",
+    chart: {
+      type: "pie",
+    },
+    plotOptions: {
+      series: {
+        animation: false,
+        borderWidth: 0,
+      },
+      pie: { innerSize: "80%", borderRadius: 0 },
+    },
+    series: [
+      {
+        data: stats,
+      },
+    ],
+  };
 
   if (!stats) return;
 
   return (
     <div className="supply-chart-wrapper" id="chart">
-      {/* <ApexChart
-        type="donut"
-        series={chartOptions.series}
-        options={chartOptions}
-        height={320}
-      /> */}
+      <PieChart highcharts={Highcharts} options={options} />
     </div>
   );
 };

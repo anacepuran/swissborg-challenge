@@ -3,6 +3,12 @@ export interface HistoricalPrice {
   price: number;
 }
 
+export interface PieChartData {
+  name: string;
+  y: number;
+  color: string;
+}
+
 export type HistoricalPricePeriod = HistoricalPrice[] | null;
 
 export type HistoricalPeriod = "day" | "month" | "year" | "all";
