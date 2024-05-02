@@ -24,15 +24,14 @@ export default function HistoricalPriceChart() {
     true // Cache enabled
   );
 
+  const reducedData = useMemo(
+    () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
+    [historicalPriceData]
+  );
+
   const handlePeriodSelection = (selected: HistoricalPeriod) => {
     setSelectedPeriod(selected);
   };
-
-  const reducedData = useMemo(
-    () => historicalPriceData ?? [],
-    // () => historicalPriceData?.filter((_, i) => i % 10 === 0) ?? [],
-    [historicalPriceData]
-  );
 
   const chartData: ChartData = useMemo(() => {
     const [series, categories] = reducedData.reduce(
@@ -60,14 +59,16 @@ export default function HistoricalPriceChart() {
   return (
     <div className="historical-chart-wrapper">
       <PriceInformation />
-      <ApexChart
-        type="area"
-        series={chartOptions.series}
-        options={chartOptions}
-        height={140}
-        width={520}
-      />
-      <div className="grid w-full max-w-5xl grid-cols-4 text-center font-light">
+      <div style={{ height: "240px" }}>
+        <ApexChart
+          type="area"
+          series={chartOptions.series}
+          options={chartOptions}
+          height={140}
+          width={520}
+        />
+      </div>
+      <div className="grid grid-cols-4 w-full">
         {HISTORICAL_PERIOD_OPTIONS.map((option, index) => {
           return (
             <button

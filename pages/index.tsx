@@ -1,15 +1,17 @@
-import dynamic from "next/dynamic";
-const BreakdownChart = dynamic(() => import("../components/BreakdownChart"), {
-  ssr: false,
-});
-const HistoricalPriceChart = dynamic(
-  () => import("../components/HistoricalPriceChart"),
-  { ssr: false }
-);
+import BreakdownChart from "@/components/BreakdownChart";
+import HistoricalPriceChart from "@/components/HistoricalPriceChart";
+
+// const BreakdownChart = dynamic(() => import("../components/BreakdownChart"), {
+//   ssr: false,
+// });
+// const HistoricalPriceChart = dynamic(
+//   () => import("../components/HistoricalPriceChart"),
+//   { ssr: false }
+// );
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-8 min-h-screen items-center w-full bg-white h-full">
+    <div className="flex flex-col items-center">
       <div className="banner">
         <h1 className="text-4xl lg:text-6xl font-bold">BORG Token Metrics</h1>
         <p className="font-light">
@@ -18,8 +20,8 @@ export default function Page() {
         </p>
         <HistoricalPriceChart />
       </div>
-      <div className="text-black">
-        <h2 className="text-4xl font-bold text-center">
+      <div className="">
+        <h2 className="text-4xl font-bold text-center p-6">
           Breakdown of BORG&apos;s circulating supply
         </h2>
         <BreakdownChart />

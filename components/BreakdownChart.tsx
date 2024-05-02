@@ -10,6 +10,10 @@ export default function Breakdown() {
 
   const BorgStatRow = (row: any) => {
     if (!borgStats) return;
+    const tokens = formatNumberWithCommas(borgStats[row.attrName + "Tokens"]);
+    const percentage = formatNumberWithCommas(
+      borgStats[row.attrName + "Percentage"]
+    );
     return (
       <>
         <div className="flex gap-2">
@@ -21,23 +25,17 @@ export default function Breakdown() {
             style={{ width: "2.6rem", height: "auto" }}
             priority
           />
-          <div className="flex flex-col-reverse w-full justify-between lg:flex-row lg:gap-2 lg:items-center ">
-            <p className="text-lg lg:text-xl font-light text-left">
-              {row.title}
-            </p>
+          <div
+            className={
+              `flex flex-col-reverse w-full justify-between` +
+              ` lg:flex-row lg:gap-2 lg:items-center`
+            }>
+            <p className="text-lg lg:text-xl text-left">{row.title}</p>
             <div className="flex flex-col text-primary text-left lg:text-right">
-              <p className="text-xl font-bold">
-                {formatNumberWithCommas(borgStats[row.attrName + "Tokens"])}
-              </p>
+              <p className="text-xl font-bold">{tokens}</p>
               {row.showPercentage && (
-                <div className="text-md font-light">
-                  (
-                  <span className="font-bold">
-                    {formatNumberWithCommas(
-                      borgStats[row.attrName + "Percentage"]
-                    )}
-                  </span>
-                  % of Circulating supply)
+                <div>
+                  (<b>{percentage}</b>% of Circulating supply)
                 </div>
               )}
             </div>

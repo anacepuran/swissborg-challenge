@@ -78,7 +78,7 @@ export function getHistoricalChartOptions(
     },
     responsive: [
       {
-        breakpoint: 786,
+        breakpoint: 600,
         options: {
           chart: { width: 300 },
         },

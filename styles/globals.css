@@ -3,18 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
   --primary-color: #01c38d;
-  --primary-text-color: #01c38d;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
 }
 
 .separator {
@@ -24,6 +13,12 @@ body {
   opacity: 0.4;
 }
 
+.historical-chart-header {
+  width: 100%;
+  padding: .5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px 10px 0 0;
+}
 .historical-chart-wrapper {
   display: flex;
   flex-direction: column;
@@ -35,13 +30,12 @@ body {
   box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
-.historical-chart-header {
-  width: 100%;
-  padding: .5rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px 10px 0 0;
+@media only screen and (max-width: 600px) {
+  .historical-chart-wrapper {
+    height: 240px;
+    width: 300px;
+  }
 }
-
 .historical-chart-button {
   width: 100%;
   height: 1.6rem;
@@ -52,12 +46,12 @@ body {
   background-color: rgba(255, 255, 255, 0.2);
   color: #01c38d;
 }
-.button-selected {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #01c38d;
-}
 .historical-chart-button:active {
   background-color: rgba(255, 255, 255, 0.25);
+  color: #01c38d;
+}
+.button-selected {
+  background-color: rgba(255, 255, 255, 0.2);
   color: #01c38d;
 }
 .button-first { border-radius: 0 0 0 10px }
@@ -76,30 +70,21 @@ body {
   color:white;
 }
 
-
-@media only screen and (max-width: 768px) {
-  .historical-chart-wrapper {
-    height: 240px;
-    width: 300px;
-  }
-}
-
-.text-primary {
-  color: var(--primary-text-color)
-}
-
+/* FONTS AND TEXTS */
 @font-face {
   font-family: 'TT Commons';
   src: url('/fonts/TT-Commons-Medium.woff2') format('opentype');
   font-weight: bold;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'TT Commons';
   src: url('/fonts/TT-Commons-Light.woff2') format('opentype');
   font-weight: 'light';
   font-display: swap;
+}
+.text-primary {
+  color: var(--primary-color)
 }
 
 .loader {
@@ -114,19 +99,13 @@ body {
   animation: rotation 2s linear infinite;
   }
 
-  @keyframes rotation {
-  0% {
-      transform: rotate(0deg);
-  }
-  100% {
-      transform: rotate(360deg);
-  }
+  
+@keyframes rotation {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
 } 
 
 .supply-chart-wrapper {
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
