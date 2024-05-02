@@ -57,7 +57,7 @@ export default function Breakdown() {
           })}
       </div>
       <div className="pt-4">
-        <SupplyChart stats={borgStats} />
+        {borgStats && <SupplyChart stats={borgStats} />}
       </div>
     </div>
   );

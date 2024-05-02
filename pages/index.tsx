@@ -20,12 +20,10 @@ export default function Page() {
         </p>
         <HistoricalPriceChart />
       </div>
-      <div className="">
-        <h2 className="text-4xl font-bold text-center p-6">
-          Breakdown of BORG&apos;s circulating supply
-        </h2>
-        <BreakdownChart />
-      </div>
+      <h2 className="text-4xl font-bold text-center p-6">
+        Breakdown of BORG&apos;s circulating supply
+      </h2>
+      <BreakdownChart />
     </div>
   );
 }
