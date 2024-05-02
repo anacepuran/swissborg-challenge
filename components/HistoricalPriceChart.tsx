@@ -8,6 +8,7 @@ import {
   HistoricalPrice,
   HistoricalPricePeriod,
 } from "../utils/types";
+import { AreaChart } from "./AreaChart";
 import PriceInformation from "./PriceInformation";
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -62,13 +63,14 @@ export default function HistoricalPriceChart() {
         {!chartData ? (
           <div className="loader-chart" />
         ) : (
-          <ApexChart
-            type="area"
-            series={chartOptions.series}
-            options={chartOptions}
-            height={140}
-            width={520}
-          />
+          <AreaChart />
+          // <ApexChart
+          //   type="area"
+          //   series={chartOptions.series}
+          //   options={chartOptions}
+          //   height={140}
+          //   width={520}
+          // />
         )}
       </div>
       <div className="grid grid-cols-4 w-full">
