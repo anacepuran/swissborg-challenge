@@ -23,7 +23,7 @@ export function useFetchData<T>(
           localStorage.setItem(endpoint, JSON.stringify(response.data));
         }
       } catch (error) {
-        console.error("Error fetching data");
+        // console.error("Error fetching data");
       }
     };
     fetchDataAsync();
