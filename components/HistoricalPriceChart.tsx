@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useFetchData } from "../api/fetch";
 import { getHistoricalChartOptions } from "../utils/chartConfiguration";
@@ -10,7 +9,7 @@ import {
 } from "../utils/types";
 import PriceInformation from "./PriceInformation";
 
-const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+// const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 type ChartData = {
   series: number[];
@@ -60,13 +59,13 @@ export default function HistoricalPriceChart() {
     <div className="historical-chart-wrapper">
       <PriceInformation />
       <div style={{ height: "240px" }}>
-        <ApexChart
+        {/* <ApexChart
           type="area"
           series={chartOptions.series}
           options={chartOptions}
           height={140}
           width={520}
-        />
+        /> */}
       </div>
       <div className="grid grid-cols-4 w-full">
         {HISTORICAL_PERIOD_OPTIONS.map((option, index) => {

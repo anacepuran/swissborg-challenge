@@ -3,7 +3,6 @@ import { BorgStats } from "@/utils/types";
 import { formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
 import { useFetchData } from "../api/fetch";
-import { SupplyChart } from "./SupplyChart";
 
 export default function Breakdown() {
   const { data: borgStats } = useFetchData<BorgStats>("borg-stats");
@@ -57,7 +56,7 @@ export default function Breakdown() {
           })}
       </div>
       <div className="pt-4">
-        {borgStats && <SupplyChart stats={borgStats} />}
+        {/* {borgStats && <SupplyChart stats={borgStats} />} */}
       </div>
     </div>
   );
