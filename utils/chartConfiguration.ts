@@ -1,4 +1,3 @@
-import { ApexOptions } from "apexcharts";
 import { HistoricalPeriod } from "./types";
 import { getDateFormat } from "./utils";
 
@@ -6,7 +5,7 @@ export function getHistoricalChartOptions(
   series: number[],
   xaxisCategories: string[] | undefined,
   selectedPeriod: HistoricalPeriod
-): ApexOptions {
+) {
   return {
     chart: {
       id: "historical-price-chart",
@@ -119,5 +118,5 @@ export function getSupplyChartOptions(series: number[], labels: string[]) {
       "rgba(54, 64, 83, 1)",
       "rgba(122, 188, 255, 1)",
     ],
-  } as ApexOptions;
+  };
 }

@@ -1,9 +1,8 @@
 import { getSupplyChartOptions } from "@/utils/chartConfiguration";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats } from "@/utils/types";
-import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
-const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+// const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface MyComponentProps {
   stats: BorgStats | null;
@@ -28,12 +27,12 @@ export const SupplyChart: React.FC<MyComponentProps> = ({ stats }) => {
 
   return (
     <div className="supply-chart-wrapper" id="chart">
-      <ApexChart
+      {/* <ApexChart
         type="donut"
         series={chartOptions.series}
         options={chartOptions}
         height={320}
-      />
+      /> */}
     </div>
   );
 };
