@@ -28,6 +28,7 @@ export default function BorgBreakdown({
             height={32}
             style={{ width: "2.6rem", height: "auto" }}
             priority
+            unoptimized
           />
           <div
             className={
