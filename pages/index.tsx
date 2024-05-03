@@ -11,11 +11,6 @@ import {
 import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
-interface Props {
-  borgStats: BorgStats;
-  dataForPieChart: PieChartData[];
-}
-
 export const getServerSideProps = async () => {
   const [borgStats, historicalData, priceInformation]: [
     BorgStats | undefined,
