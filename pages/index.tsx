@@ -1,12 +1,7 @@
 import BorgBreakdown from "@/components/BorgBreakdown";
 import BorgMetrics from "@/components/BorgMetrics";
 import { BASE_API_URL, STATS_TO_DISPLAY } from "@/utils/configuration";
-import {
-  BorgStats,
-  HistoricalPricePeriod,
-  PieChartData,
-  Price,
-} from "@/utils/types";
+import { BorgStats, PieChartData, Price } from "@/utils/types";
 import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
@@ -19,7 +14,7 @@ export const getServerSideProps = async () => {
     ]);
 
     const borgStats: BorgStats = await resStats.json();
-    const historicalData: HistoricalPricePeriod = await resHistorical.json();
+    // const historicalData: HistoricalPricePeriod = await resHistorical.json();
     const priceInformation: Record<string, Price> = await resPrice.json();
 
     const dataForPieChart: PieChartData[] = borgStats
@@ -34,7 +29,7 @@ export const getServerSideProps = async () => {
       props: {
         borgStats,
         dataForPieChart,
-        historicalData,
+        // historicalData,
         priceInformation,
       },
     };
@@ -51,7 +46,7 @@ export const getServerSideProps = async () => {
 export default function Page({
   borgStats,
   dataForPieChart,
-  historicalData,
+  // historicalData,
   priceInformation,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -63,7 +58,7 @@ export default function Page({
           SwissBorg Ecosystem.
         </p>
         <BorgMetrics
-          chartData={historicalData}
+          // chartData={historicalData}
           priceInformation={priceInformation}
         />
       </div>

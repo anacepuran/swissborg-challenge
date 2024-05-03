@@ -4,12 +4,12 @@ import AreaChart from "highcharts-react-official";
 import { useEffect, useState } from "react";
 
 interface HistoricalChartProps {
-  chartData: HistoricalPricePeriod | undefined;
+  // chartData: HistoricalPricePeriod | undefined;
   selectedPeriod: HistoricalPeriod;
 }
 
 export function HistoricalChart({
-  chartData,
+  // chartData,
   selectedPeriod,
 }: HistoricalChartProps) {
   const [historicalData, setHistoricalData] = useState<{
@@ -31,16 +31,16 @@ export function HistoricalChart({
     return formattedChartData;
   };
 
-  useEffect(() => {
-    if (chartData) {
-      const formattedChartData: number[][] =
-        chartData
-          ?.filter((_, index) => index % 10 === 0)
-          .map((item) => [new Date(item.timestamp).getTime(), item.price]) ??
-        [];
-      setHistoricalData({ day: formattedChartData });
-    }
-  }, [chartData]);
+  // useEffect(() => {
+  //   if (chartData) {
+  //     const formattedChartData: number[][] =
+  //       chartData
+  //         ?.filter((_, index) => index % 10 === 0)
+  //         .map((item) => [new Date(item.timestamp).getTime(), item.price]) ??
+  //       [];
+  //     setHistoricalData({ day: formattedChartData });
+  //   }
+  // }, [chartData]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,8 +60,7 @@ export function HistoricalChart({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
-  if (!chartData || !historicalData[selectedPeriod])
-    return <div className="loader-chart" />;
+  if (!historicalData[selectedPeriod]) return <div className="loader-chart" />;
 
   const options = {
     title: "",
