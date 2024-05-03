@@ -30,16 +30,11 @@ export const getServerSideProps = async () => {
         }))
       : [];
 
-    const formattedChartData: number[][] =
-      historicalData
-        ?.filter((_, index) => index % 10 === 0)
-        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
-
     return {
       props: {
         borgStats,
         dataForPieChart,
-        formattedChartData,
+        historicalData,
         priceInformation,
       },
     };
@@ -56,7 +51,7 @@ export const getServerSideProps = async () => {
 export default function Page({
   borgStats,
   dataForPieChart,
-  formattedChartData,
+  historicalData,
   priceInformation,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -68,7 +63,7 @@ export default function Page({
           SwissBorg Ecosystem.
         </p>
         <BorgMetrics
-          chartData={formattedChartData}
+          chartData={historicalData}
           priceInformation={priceInformation}
         />
       </div>

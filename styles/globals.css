@@ -6,36 +6,59 @@
   --primary-color: #01c38d;
 }
 
-.separator {
-  background-color: #8f96a1;
-  height: 1px;
-  width: 100%;
-  opacity: 0.4;
+/* FONTS AND TEXTS */
+@font-face {
+  font-family: 'TT Commons';
+  src: url('/fonts/TT-Commons-Medium.woff2') format('opentype');
+  font-weight: bold;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Commons';
+  src: url('/fonts/TT-Commons-Light.woff2') format('opentype');
+  font-weight: 'light';
+  font-display: swap;
+}
+.text-primary {
+  color: var(--primary-color);
 }
 
-.historical-chart-header {
-  width: 100%;
-  padding: .5rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px 10px 0 0;
-}
+/* HISTORICAL CHART */
 .historical-chart-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 240px;
-  width: 520px;
+  height: auto;
+  width: fit-content;
   background-color: rgba(25, 30, 41, 0.9);
   border-radius: 10px;
   box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
-@media only screen and (max-width: 600px) {
-  .historical-chart-wrapper {
-    height: 240px;
-    width: 300px;
+
+.chart-wrapper {
+  width: 500px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.supply-chart-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  .chart-wrapper {
+    width: 320px
   }
 }
+.historical-chart-header {
+  height: 3.6rem;
+  padding: .5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px 10px 0 0;
+}
+
+/* BUTTONS */
 .historical-chart-button {
   width: 100%;
   height: 1.6rem;
@@ -58,47 +81,36 @@
 .button-last { border-radius: 0 0 10px 0 }
 
 .banner {
-  width: 100%;
+  background: linear-gradient(to bottom right, #191e29, #364053);
+  color:white;
   min-height: 52vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: center;
   text-align: center;
   padding:4rem;
-  background: linear-gradient(to bottom right, #191e29, #364053);
-  color:white;
 }
 
-/* FONTS AND TEXTS */
-@font-face {
-  font-family: 'TT Commons';
-  src: url('/fonts/TT-Commons-Medium.woff2') format('opentype');
-  font-weight: bold;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'TT Commons';
-  src: url('/fonts/TT-Commons-Light.woff2') format('opentype');
-  font-weight: 'light';
-  font-display: swap;
-}
-.text-primary {
-  color: var(--primary-color);
-  /* text-shadow: 1px 0 0.5px black; */
-  /* color: black; */
+.separator {
+  background-color: #8f96a1;
+  width: 100%;
+  height: 1px;
+  opacity: 0.4;
 }
 
+
+
+/* LOADING STATES */
 .loader {
   width: 12px;
   height: 12px;
-  margin-left: 1rem;
   border: 1px solid #FFF;
   border-bottom-color: transparent;
   border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
   animation: rotation 2s linear infinite;
+  display: inline-flex
 }
 .loader-chart {
   width: 3rem;
@@ -112,8 +124,5 @@
   0% { transform: rotate(0deg) }
   100% { transform: rotate(360deg) }
 }
-.supply-chart-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
+
+

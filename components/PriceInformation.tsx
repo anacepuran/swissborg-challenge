@@ -10,10 +10,9 @@ export default function PriceInformation({
   priceInformation,
 }: PriceInformationProps) {
   if (!priceInformation) return <div className="loader" />;
-
   return (
     <>
-      <div className="historical-chart-header flex gap-3">
+      <div className="flex gap-3">
         <Image
           src={"icons/usd-to-borg.svg"}
           alt={"usd-to-borg"}
@@ -23,10 +22,10 @@ export default function PriceInformation({
           priority
           unoptimized
         />
-        <div className="font-light text-left">
+        <div className="text-left">
           <p>USD {priceInformation["usd"].price?.toFixed(3)}</p>
           <p
-            className="text-primary text-sm"
+            className="text-sm"
             style={{
               color: getPriceColor(priceInformation["usd"].change24h),
             }}>
@@ -35,7 +34,6 @@ export default function PriceInformation({
           </p>
         </div>
       </div>
-      <div className="separator" />
     </>
   );
 }

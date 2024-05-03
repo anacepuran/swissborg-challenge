@@ -4,7 +4,7 @@ import AreaChart from "highcharts-react-official";
 import { useEffect, useState } from "react";
 
 interface HistoricalChartProps {
-  chartData: number[][] | undefined;
+  chartData: HistoricalPricePeriod | undefined;
   selectedPeriod: HistoricalPeriod;
 }
 
@@ -33,7 +33,12 @@ export function HistoricalChart({
 
   useEffect(() => {
     if (chartData) {
-      setHistoricalData({ day: chartData });
+      const formattedChartData: number[][] =
+        chartData
+          ?.filter((_, index) => index % 10 === 0)
+          .map((item) => [new Date(item.timestamp).getTime(), item.price]) ??
+        [];
+      setHistoricalData({ day: formattedChartData });
     }
   }, [chartData]);
 
@@ -62,8 +67,8 @@ export function HistoricalChart({
     title: "",
     chart: {
       type: "area",
-      height: 180,
-      width: 520,
+      height: 160,
+      width: 500,
       animation: false,
       backgroundColor: "rgba(25, 30, 41, 0.9)",
       style: {
@@ -149,7 +154,15 @@ export function HistoricalChart({
             maxWidth: 600,
           },
           chartOptions: {
-            chart: { width: 300 },
+            chart: { width: 320 },
+          },
+        },
+        {
+          condition: {
+            minWidth: 601,
+          },
+          chartOptions: {
+            chart: { width: 500 },
           },
         },
       ],

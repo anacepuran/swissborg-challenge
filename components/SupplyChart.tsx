@@ -9,20 +9,18 @@ interface SupplyChartProps {
 
 export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
   if (!chartData) return <div className="loader-chart" />;
+
   const options = {
     title: "",
     chart: {
       type: "pie",
+      renderTo: "container",
       style: {
         fontFamily: "TT Commons, sans-serif",
         fontWeight: "normal",
         fontSize: "18px",
       },
       margin: [0, 0, 0, 0],
-      spacingTop: 0,
-      spacingBottom: 0,
-      spacingLeft: 0,
-      spacingRight: 0,
     },
     plotOptions: {
       series: {
@@ -30,50 +28,31 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
         borderWidth: 0,
         enableMouseTracking: false,
       },
-      pie: { innerSize: "80%", borderRadius: 0, size: "100%" },
+      pie: {
+        innerSize: "70%",
+        borderRadius: 0,
+        startAngle: 80,
+      },
     },
     series: [
       {
         data: chartData,
         dataLabels: {
           useHTML: true,
-          distance: 10,
+          style: { fontWeight: "normal" },
           connectorWidth: 0,
-          style: {
-            fontWeight: "normal",
-          },
+          distance: 4,
         },
       },
     ],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 400,
-          },
-          chartOptions: {
-            chart: {
-              marginRight: 10,
-            },
-            plotOptions: {
-              pie: {
-                dataLabels: {
-                  distance: 5,
-                },
-              },
-            },
-          },
-        },
-      ],
-    },
   };
 
   return (
-    <div id="chart" className="supply-chart-wrapper">
+    <div id="container" className="supply-chart-wrapper">
       <PieChart
         highcharts={Highcharts}
         options={options}
-        containerProps={{ style: { height: "100%", width: "100%" } }}
+        // containerProps={{ style: { height: "auto", width: "100%" } }}
       />
     </div>
   );
