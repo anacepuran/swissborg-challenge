@@ -1,6 +1,6 @@
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts/highstock";
 import { useEffect, useState } from "react";
 
 interface HistoricalChartProps {
