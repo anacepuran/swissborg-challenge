@@ -1,45 +1,62 @@
+import { HistoricalPricePeriod, Price } from "@/utils/types";
 import { useEffect, useState } from "react";
 
 const API_URL = "https://borg-api-techchallenge.swissborg-stage.com/api";
 
-export function useFetchData<T>(
-  endpoint: string,
-  enableCaching?: boolean
-): {
-  data: T | null;
+export function useFetchHistoricalPriceData(endpoint: string): {
+  data: number[][] | null;
 } {
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<number[][] | null>(null);
 
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
+        console.log(endpoint);
         const cachedItem = localStorage.getItem(endpoint);
+        console.log(cachedItem);
         if (cachedItem) {
-          setData(JSON.parse(cachedItem));
+          console.log("*** FROM CACHE ***");
+          setData(JSON.parse(cachedItem).series);
         } else {
           const response = await fetch(`${API_URL}/${endpoint}`);
-          const responseData: T = await response.json();
-          setData(responseData);
-          localStorage.setItem(endpoint, JSON.stringify(responseData));
+          const responseData: HistoricalPricePeriod = await response.json();
+          const formattedChartData: number[][] =
+            responseData
+              ?.filter((_, index) => index % 10 === 0)
+              .map((item) => [
+                new Date(item.timestamp).getTime(),
+                item.price,
+              ]) ?? [];
+          console.log("formattedChartData");
+          console.log(formattedChartData);
+          setData(formattedChartData);
         }
       } catch (error) {
         console.error("Error fetching data");
       }
     };
     fetchDataAsync();
-  }, [enableCaching, endpoint]);
+  }, [endpoint]);
 
   return { data: data };
 }
 
-export async function fetchData<T>(endpoint: string) {
-  // const resPriceInfo = await fetch(BASE_API_URL + "price");
-  // const priceInformation: Record<string, Price> = await resPriceInfo.json();
-  try {
-    const response = await fetch(API_URL + endpoint);
-    const responseData: T = await response.json();
-    return responseData;
-  } catch (error) {
-    console.error(error);
-  }
+export function useFetchPriceData(): {
+  data: Record<string, Price> | null;
+} {
+  const [data, setData] = useState<Record<string, Price> | null>(null);
+  useEffect(() => {
+    const fetchDataAsync = async () => {
+      try {
+        const response = await fetch(`${API_URL}/price`);
+        const responseData: Record<string, Price> = await response.json();
+        setData(responseData);
+      } catch (error) {
+        console.error("Error fetching data");
+      }
+    };
+    fetchDataAsync();
+  }, []);
+
+  return { data: data };
 }

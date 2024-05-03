@@ -6,41 +6,42 @@ import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = async () => {
-  const BASE_API_URL =
-    "https://borg-api-techchallenge.swissborg-stage.com/api/";
-  // const [borgStats, historicalData, priceInformation]: [
-  //   BorgStats | undefined,
-  //   HistoricalPricePeriod | undefined,
-  //   Record<string, Price> | undefined
-  // ] = await Promise.all([
-  //   fetchData<BorgStats>("borg-stats"),
-  //   fetchData<HistoricalPricePeriod>("historical-price/day"),
-  //   fetchData<Record<string, Price>>("price"),
-  // ]);
-  const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
-  const borgStats: BorgStats = await resBorgStats.json();
-  const dataForPieChart: PieChartData[] = borgStats
-    ? STATS_TO_DISPLAY.map(
-        (stat) =>
-          ({
-            name: formatPieChartLabel(stat.chartLabel, stat.color),
-            y: borgStats[stat.attrName + "Tokens"],
-            color: stat.color,
-          } as PieChartData)
-      )
-    : [];
+  try {
+    const BASE_API_URL =
+      "https://borg-api-techchallenge.swissborg-stage.com/api/";
+    const [resBorgStats, resHistoricalData] = await Promise.all([
+      fetch(BASE_API_URL + "borg-stats"),
+      fetch(BASE_API_URL + "historical-price/day"),
+    ]);
 
-  const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
-  const historicalData: HistoricalPricePeriod = await resHistoricalData.json();
+    const borgStats: BorgStats = await resBorgStats.json();
+    const historicalData: HistoricalPricePeriod =
+      await resHistoricalData.json();
 
-  // ?.filter((_, index) => index % 10 === 0) // reduce
+    const dataForPieChart: PieChartData[] = borgStats
+      ? STATS_TO_DISPLAY.map((stat) => ({
+          name: formatPieChartLabel(stat.chartLabel, stat.color),
+          y: borgStats[stat.attrName + "Tokens"],
+          color: stat.color,
+        }))
+      : [];
 
-  // return {
-  //   props: { borgStats, dataForPieChart },
-  // };
-  return {
-    props: { borgStats, dataForPieChart, historicalData },
-  };
+    const formattedChartData: number[][] =
+      historicalData
+        ?.filter((_, index) => index % 10 === 0)
+        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
+
+    return {
+      props: { borgStats, dataForPieChart, formattedChartData },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        error: "Error fetching data",
+      },
+    };
+  }
 };
 
 export default function Page(
@@ -54,7 +55,7 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics chartData={props.historicalData} />
+        <BorgMetrics chartData={props.formattedChartData} />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply

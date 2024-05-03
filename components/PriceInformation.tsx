@@ -1,4 +1,4 @@
-import { useFetchData } from "@/api/fetch";
+import { useFetchPriceData } from "@/api/fetch";
 import Image from "next/image";
 import { Price } from "../utils/types";
 import { getPriceColor } from "../utils/utils";
@@ -8,8 +8,7 @@ interface PriceInformationProps {
 }
 
 export default function PriceInformation() {
-  const { data: priceInformation } =
-    useFetchData<Record<string, Price>>("price");
+  const { data: priceInformation } = useFetchPriceData();
 
   return (
     <>
@@ -22,7 +21,7 @@ export default function PriceInformation() {
           style={{ width: "4rem", height: "auto" }}
           priority
         />
-        {priceInformation && (
+        {priceInformation ? (
           <div className="font-light text-left">
             <p>
               USD{" "}
@@ -41,6 +40,8 @@ export default function PriceInformation() {
               </p>
             )}
           </div>
+        ) : (
+          <div className="loader" />
         )}
       </div>
       <div className="separator" />

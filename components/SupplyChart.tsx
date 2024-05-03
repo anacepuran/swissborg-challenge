@@ -4,10 +4,11 @@ import PieChart from "highcharts-react-official";
 import React from "react";
 
 interface SupplyChartProps {
-  stats: PieChartData[];
+  chartData: PieChartData[] | undefined;
 }
 
-export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
+export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
+  if (!chartData) return <div className="loader-chart" />;
   const options = {
     title: "",
     chart: {
@@ -28,7 +29,7 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
     },
     series: [
       {
-        data: stats,
+        data: chartData,
         dataLabels: {
           useHTML: true,
           distance: 10,
@@ -61,8 +62,6 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
       ],
     },
   };
-
-  if (!stats) return;
 
   return (
     <div id="chart" className="supply-chart-wrapper">

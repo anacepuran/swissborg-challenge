@@ -6,7 +6,7 @@ import { SupplyChart } from "./SupplyChart";
 
 interface BreakdownProps {
   borgStats: BorgStats | undefined;
-  pieChartData: PieChartData[];
+  pieChartData: PieChartData[] | undefined;
 }
 export default function BorgBreakdown({
   borgStats,
@@ -61,7 +61,7 @@ export default function BorgBreakdown({
           })}
       </div>
       <div className="pt-4">
-        {borgStats && <SupplyChart stats={pieChartData} />}
+        <SupplyChart chartData={pieChartData} />
       </div>
     </div>
   );

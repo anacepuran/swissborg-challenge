@@ -1,17 +1,12 @@
-import { HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
 import AreaChart from "highcharts-react-official";
 
 interface HistoricalChartProps {
-  reducedData: HistoricalPricePeriod;
+  reducedData: number[][] | null;
 }
 
 export function HistoricalChart({ reducedData }: HistoricalChartProps) {
-  const formattedChartData: number[][] =
-    reducedData?.map((item) => [
-      new Date(item.timestamp).getTime(),
-      item.price,
-    ]) ?? [];
+  if (!reducedData) return <div className="loader-chart" />;
   const options = {
     title: "",
     chart: {
@@ -93,7 +88,7 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
       {
         type: "area",
         name: "USD to BORG",
-        data: formattedChartData,
+        data: reducedData,
         boostThreshold: 1,
       },
     ],
