@@ -1,3 +1,4 @@
+import { useFetchData } from "@/api/fetch";
 import Image from "next/image";
 import { Price } from "../utils/types";
 import { getPriceColor } from "../utils/utils";
@@ -6,9 +7,10 @@ interface PriceInformationProps {
   priceInformation: Record<string, Price>;
 }
 
-export default function PriceInformation({
-  priceInformation,
-}: PriceInformationProps) {
+export default function PriceInformation() {
+  const { data: priceInformation } =
+    useFetchData<Record<string, Price>>("price");
+
   return (
     <>
       <div className="historical-chart-header flex gap-3">

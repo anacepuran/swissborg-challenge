@@ -17,7 +17,7 @@ export default function BorgMetrics({ chartData, priceInfo }: MetricsProps) {
 
   return (
     <div className="historical-chart-wrapper">
-      {priceInfo && <PriceInformation priceInformation={priceInfo} />}
+      {priceInfo && <PriceInformation />}
       <div className="flex items-center" style={{ height: "240px" }}>
         {!chartData ? (
           <div className="loader-chart" />

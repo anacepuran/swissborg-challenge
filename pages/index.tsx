@@ -1,7 +1,7 @@
-import { fetchData } from "@/api/fetch";
 import BorgBreakdown from "@/components/BorgBreakdown";
+import BorgMetrics from "@/components/BorgMetrics";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
-import { BorgStats, PieChartData } from "@/utils/types";
+import { BorgStats, HistoricalPricePeriod, PieChartData } from "@/utils/types";
 import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
@@ -15,7 +15,8 @@ export const getServerSideProps = async () => {
   //   fetchData<HistoricalPricePeriod>("historical-price/day"),
   //   fetchData<Record<string, Price>>("price"),
   // ]);
-  const borgStats: BorgStats = fetchData<BorgStats>("borg-stats");
+  const resBorgStats = await fetch("borg-stats");
+  const borgStats: BorgStats = await resBorgStats.json();
   const dataForPieChart: PieChartData[] = borgStats
     ? STATS_TO_DISPLAY.map(
         (stat) =>
@@ -27,18 +28,20 @@ export const getServerSideProps = async () => {
       )
     : [];
 
-  // const formattedChartData: number[][] =
-  //   historicalData?.map((item) => [
-  //     new Date(item.timestamp).getTime(),
-  //     item.price,
-  //   ]) ?? [];
+  const resHistoricalData = await fetch("borg-stats");
+  const historicalData: HistoricalPricePeriod = await resHistoricalData.json();
+  const formattedChartData: number[][] =
+    historicalData?.map((item) => [
+      new Date(item.timestamp).getTime(),
+      item.price,
+    ]) ?? [];
   // ?.filter((_, index) => index % 10 === 0) // reduce
 
+  // return {
+  //   props: { borgStats, dataForPieChart },
+  // };
   return {
-    props: { borgStats, dataForPieChart },
-  };
-  return {
-    props: { borgStats, dataForPieChart, formattedChartData, priceInformation },
+    props: { borgStats, dataForPieChart, formattedChartData },
   };
 };
 
@@ -53,10 +56,7 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        {/* <BorgMetrics
-          chartData={props.formattedChartData}
-          priceInfo={props.priceInformation}
-        /> */}
+        <BorgMetrics chartData={props.formattedChartData} />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
