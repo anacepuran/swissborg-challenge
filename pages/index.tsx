@@ -1,6 +1,5 @@
 import { fetchData } from "@/api/fetch";
 import BorgBreakdown from "@/components/BorgBreakdown";
-import BorgMetrics from "@/components/BorgMetrics";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import {
   BorgStats,
@@ -55,10 +54,10 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics
+        {/* <BorgMetrics
           chartData={props.formattedChartData}
           priceInfo={props.priceInformation}
-        />
+        /> */}
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
