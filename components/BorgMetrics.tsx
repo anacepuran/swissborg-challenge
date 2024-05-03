@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
 import { HistoricalPeriod, Price } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
 import PriceInformation from "./PriceInformation";
@@ -31,21 +30,40 @@ export default function BorgMetrics({
           selectedPeriod={selectedPeriod}
         />
       </div>
+      {/* PERIOD SELECTION BUTTONS */}
       <div className="grid grid-cols-4 w-full">
-        {HISTORICAL_PERIOD_OPTIONS.map((option, index) => {
-          return (
-            <button
-              key={option.displayName}
-              onClick={() => handlePeriodSelection(option.name)}
-              className={`historical-chart-button ${
-                option.name === selectedPeriod && "button-selected"
-              } ${index === 0 && "button-first"} ${
-                index === 3 && "button-last"
-              }`}>
-              {option.displayName}
-            </button>
-          );
-        })}
+        <button
+          key={"day"}
+          onClick={() => handlePeriodSelection("day")}
+          className={`historical-chart-button button-first ${
+            selectedPeriod === "day" && "button-selected"
+          }`}>
+          1D
+        </button>
+        <button
+          key={"month"}
+          onClick={() => handlePeriodSelection("month")}
+          className={`historical-chart-button ${
+            selectedPeriod === "month" && "button-selected"
+          }`}>
+          1D
+        </button>
+        <button
+          key={"year"}
+          onClick={() => handlePeriodSelection("year")}
+          className={`historical-chart-button ${
+            selectedPeriod === "year" && "button-selected"
+          }`}>
+          1D
+        </button>
+        <button
+          key={"all"}
+          onClick={() => handlePeriodSelection("all")}
+          className={`historical-chart-button button-last ${
+            selectedPeriod === "all" && "button-selected"
+          }`}>
+          1D
+        </button>
       </div>
     </div>
   );
