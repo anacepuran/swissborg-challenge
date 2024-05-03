@@ -1,14 +1,21 @@
+import type { InferGetServerSidePropsType } from "next";
 import Image from "next/image";
 import { Price } from "../utils/types";
 import { getPriceColor } from "../utils/utils";
 
-interface PriceInformationProps {
-  priceInformation: Record<string, Price>;
-}
+export const getServerSideProps = async () => {
+  const res = await fetch(
+    "https://borg-api-techchallenge.swissborg-stage.com/api/price"
+  );
+  const priceInformation: Record<string, Price> = await res.json();
+  return {
+    props: { priceInformation },
+  };
+};
 
 export default function PriceInformation({
   priceInformation,
-}: PriceInformationProps) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <div className="historical-chart-header flex gap-3">
