@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 
-const API_URL = "https://borg-api-techchallenge.swissborg-stage.com/api";
+const API_URL = "https://borg-api-techchallenge.swissborg-stage.com/api/";
 
 export function useFetchData<T>(
   endpoint: string,
@@ -18,9 +17,10 @@ export function useFetchData<T>(
         if (cachedItem) {
           setData(JSON.parse(cachedItem));
         } else {
-          const response = await axios.get<T>(`${API_URL}/${endpoint}`);
-          setData(response.data);
-          localStorage.setItem(endpoint, JSON.stringify(response.data));
+          const response = await fetch(`${API_URL}/${endpoint}`);
+          const responseData: T = await response.json();
+          setData(responseData);
+          localStorage.setItem(endpoint, JSON.stringify(responseData));
         }
       } catch (error) {
         console.error("Error fetching data");
@@ -30,4 +30,16 @@ export function useFetchData<T>(
   }, [enableCaching, endpoint]);
 
   return { data: data };
+}
+
+export async function fetchData<T>(endpoint: string) {
+  // const resPriceInfo = await fetch(BASE_API_URL + "price");
+  // const priceInformation: Record<string, Price> = await resPriceInfo.json();
+  try {
+    const response = await fetch(API_URL + endpoint);
+    const responseData: T = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error(error);
+  }
 }

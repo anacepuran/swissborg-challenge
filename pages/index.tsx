@@ -1,3 +1,4 @@
+import { fetchData } from "@/api/fetch";
 import BorgBreakdown from "@/components/BorgBreakdown";
 import BorgMetrics from "@/components/BorgMetrics";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
@@ -16,25 +17,37 @@ interface Props {
 }
 
 export const getServerSideProps = async () => {
-  const BASE_API_URL =
-    "https://borg-api-techchallenge.swissborg-stage.com/api/";
-  const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
-  const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
+  const [borgStats, historicalData, priceInformation]: [
+    BorgStats | undefined,
+    HistoricalPricePeriod | undefined,
+    Record<string, Price> | undefined
+  ] = await Promise.all([
+    fetchData<BorgStats>("borg-stats"),
+    fetchData<HistoricalPricePeriod>("historical-price/day"),
+    fetchData<Record<string, Price>>("price"),
+  ]);
 
-  const borgStats: BorgStats = await resBorgStats.json();
-  const dataForPieChart: PieChartData[] = STATS_TO_DISPLAY.map(
-    (stat) =>
-      ({
-        name: formatPieChartLabel(stat.chartLabel, stat.color),
-        y: borgStats[stat.attrName + "Tokens"],
-        color: stat.color,
-      } as PieChartData)
-  );
+  // const BASE_API_URL =
+  //   "https://borg-api-techchallenge.swissborg-stage.com/api/";
+  // const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
+  // const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
 
-  const historicalDataPreComputed: HistoricalPricePeriod =
-    await resHistoricalData.json();
+  // const borgStats: BorgStats = await resBorgStats.json();
+  const dataForPieChart: PieChartData[] = borgStats
+    ? STATS_TO_DISPLAY.map(
+        (stat) =>
+          ({
+            name: formatPieChartLabel(stat.chartLabel, stat.color),
+            y: borgStats[stat.attrName + "Tokens"],
+            color: stat.color,
+          } as PieChartData)
+      )
+    : [];
+
+  // const historicalDataPreComputed: HistoricalPricePeriod =
+  //   await resHistoricalData.json();
   const formattedChartData: number[][] =
-    historicalDataPreComputed?.map((item) => [
+    historicalData?.map((item) => [
       new Date(item.timestamp).getTime(),
       item.price,
     ]) ?? [];
@@ -45,8 +58,8 @@ export const getServerSideProps = async () => {
   //   JSON.stringify(formattedChartData)
   // );
 
-  const resPriceInfo = await fetch(BASE_API_URL + "price");
-  const priceInformation: Record<string, Price> = await resPriceInfo.json();
+  // const resPriceInfo = await fetch(BASE_API_URL + "price");
+  // const priceInformation: Record<string, Price> = await resPriceInfo.json();
 
   return {
     props: { borgStats, dataForPieChart, formattedChartData, priceInformation },
@@ -56,6 +69,8 @@ export const getServerSideProps = async () => {
 export default function Page(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
+  console.log("PROPS");
+  console.log(props);
   return (
     <div className="flex flex-col items-center">
       <div className="banner">
@@ -64,18 +79,22 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics
-          chartData={props.formattedChartData}
-          priceInfo={props.priceInformation}
-        />
+        {props.formattedChartData && props.priceInformation && (
+          <BorgMetrics
+            chartData={props.formattedChartData}
+            priceInfo={props.priceInformation}
+          />
+        )}
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
       </h2>
-      <BorgBreakdown
-        borgStats={props.borgStats}
-        pieChartData={props.dataForPieChart}
-      />
+      {props.borgStats && props.dataForPieChart && (
+        <BorgBreakdown
+          borgStats={props.borgStats}
+          pieChartData={props.dataForPieChart}
+        />
+      )}
     </div>
   );
 }
