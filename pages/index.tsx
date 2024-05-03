@@ -32,18 +32,14 @@ export const getServerSideProps = async () => {
 
   const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
   const historicalData: HistoricalPricePeriod = await resHistoricalData.json();
-  const formattedChartData: number[][] =
-    historicalData?.map((item) => [
-      new Date(item.timestamp).getTime(),
-      item.price,
-    ]) ?? [];
+
   // ?.filter((_, index) => index % 10 === 0) // reduce
 
   // return {
   //   props: { borgStats, dataForPieChart },
   // };
   return {
-    props: { borgStats, dataForPieChart, formattedChartData },
+    props: { borgStats, dataForPieChart, historicalData },
   };
 };
 
@@ -58,7 +54,7 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics chartData={props.formattedChartData} />
+        <BorgMetrics chartData={props.historicalData} />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply

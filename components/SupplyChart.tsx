@@ -24,7 +24,7 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
         borderWidth: 0,
         enableMouseTracking: false,
       },
-      pie: { innerSize: "80%", borderRadius: 0, size: "70%" },
+      pie: { innerSize: "80%", borderRadius: 0, size: "100%" },
     },
     series: [
       {

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPeriod } from "../utils/types";
+import { HistoricalPeriod, HistoricalPricePeriod } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
 import PriceInformation from "./PriceInformation";
 
 interface MetricsProps {
-  chartData: number[][];
+  chartData: HistoricalPricePeriod;
 }
 
 export default function BorgMetrics({ chartData }: MetricsProps) {
