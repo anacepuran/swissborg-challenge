@@ -91,18 +91,18 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
         boostThreshold: 1,
       },
     ],
-    // responsive: {
-    //   rules: [
-    //     {
-    //       condition: {
-    //         maxWidth: 600,
-    //       },
-    //       chartOptions: {
-    //         chart: { width: 300 },
-    //       },
-    //     },
-    //   ],
-    // },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 600,
+          },
+          chartOptions: {
+            chart: { width: 300 },
+          },
+        },
+      ],
+    },
   };
   return (
     <div>
