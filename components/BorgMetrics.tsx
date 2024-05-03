@@ -15,11 +15,7 @@ export default function BorgMetrics({
 }: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
 
-  // const historicalChartData = useMemo(() => {
-  //   return chartData;
-  // }, [chartData]);
-
-  // const { data: historicalChartData } = useFetchHistoricalPriceData(
+  // const { data: historicalChartData, loading } = useFetchHistoricalPriceData(
   //   `historical-price/${selectedPeriod}`
   // );
 

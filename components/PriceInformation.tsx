@@ -9,7 +9,6 @@ interface PriceInformationProps {
 export default function PriceInformation({
   priceInformation,
 }: PriceInformationProps) {
-  // const { data: priceInformation } = useFetchPriceData();
   if (!priceInformation) return <div className="loader" />;
 
   return (
@@ -24,22 +23,15 @@ export default function PriceInformation({
           priority
         />
         <div className="font-light text-left">
-          <p>
-            USD{" "}
-            {priceInformation["usd"].price?.toFixed(3) ?? (
-              <div className="loader" />
-            )}
+          <p>USD{priceInformation["usd"].price?.toFixed(3)}</p>
+          <p
+            className="text-primary text-sm"
+            style={{
+              color: getPriceColor(priceInformation["usd"].change24h),
+            }}>
+            {priceInformation["usd"].change24h}%{" "}
+            <span className="text-primary">24 Hours</span>
           </p>
-          {priceInformation["usd"].change24h && (
-            <p
-              className="text-primary text-sm"
-              style={{
-                color: getPriceColor(priceInformation["usd"].change24h),
-              }}>
-              {priceInformation["usd"].change24h}%{" "}
-              <span className="text-primary">24 Hours</span>
-            </p>
-          )}
         </div>
       </div>
       <div className="separator" />
