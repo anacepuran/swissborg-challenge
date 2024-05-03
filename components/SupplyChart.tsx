@@ -33,6 +33,9 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ stats }) => {
           useHTML: true,
           distance: 10,
           connectorWidth: 0,
+          style: {
+            fontWeight: "normal",
+          },
         },
       },
     ],

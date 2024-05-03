@@ -29,10 +29,10 @@ export const getServerSideProps = async () => {
   );
   const historicalDataPreComputed: HistoricalPricePeriod =
     await resHistorical.json();
-  const formattedChartData: any = historicalDataPreComputed?.map((item) => [
-    new Date(item.timestamp).getTime(),
-    item.price,
-  ]);
+  const formattedChartData: any = historicalDataPreComputed
+    ?.filter((_, index) => index % 10 === 0) // reduce
+    .map((item) => [new Date(item.timestamp).getTime(), item.price]);
+
   return { props: { borgStats, dataForPieChart, formattedChartData } };
 };
 
