@@ -20,7 +20,6 @@ export const getServerSideProps = async () => {
     "https://borg-api-techchallenge.swissborg-stage.com/api/";
   const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
   const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
-  const resPriceInfo = await fetch(BASE_API_URL + "price");
 
   const borgStats: BorgStats = await resBorgStats.json();
   const dataForPieChart: PieChartData[] = STATS_TO_DISPLAY.map(
@@ -39,6 +38,7 @@ export const getServerSideProps = async () => {
       ?.filter((_, index) => index % 10 === 0) // reduce
       .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
 
+  const resPriceInfo = await fetch(BASE_API_URL + "price");
   const priceInformation: Record<string, Price> = await resPriceInfo.json();
 
   return {
