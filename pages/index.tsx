@@ -1,25 +1,21 @@
 import { fetchData } from "@/api/fetch";
 import BorgBreakdown from "@/components/BorgBreakdown";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
-import {
-  BorgStats,
-  HistoricalPricePeriod,
-  PieChartData,
-  Price,
-} from "@/utils/types";
+import { BorgStats, PieChartData } from "@/utils/types";
 import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = async () => {
-  const [borgStats, historicalData, priceInformation]: [
-    BorgStats | undefined,
-    HistoricalPricePeriod | undefined,
-    Record<string, Price> | undefined
-  ] = await Promise.all([
-    fetchData<BorgStats>("borg-stats"),
-    fetchData<HistoricalPricePeriod>("historical-price/day"),
-    fetchData<Record<string, Price>>("price"),
-  ]);
+  // const [borgStats, historicalData, priceInformation]: [
+  //   BorgStats | undefined,
+  //   HistoricalPricePeriod | undefined,
+  //   Record<string, Price> | undefined
+  // ] = await Promise.all([
+  //   fetchData<BorgStats>("borg-stats"),
+  //   fetchData<HistoricalPricePeriod>("historical-price/day"),
+  //   fetchData<Record<string, Price>>("price"),
+  // ]);
+  const borgStats: BorgStats = fetchData<BorgStats>("borg-stats");
   const dataForPieChart: PieChartData[] = borgStats
     ? STATS_TO_DISPLAY.map(
         (stat) =>
@@ -31,13 +27,16 @@ export const getServerSideProps = async () => {
       )
     : [];
 
-  const formattedChartData: number[][] =
-    historicalData?.map((item) => [
-      new Date(item.timestamp).getTime(),
-      item.price,
-    ]) ?? [];
+  // const formattedChartData: number[][] =
+  //   historicalData?.map((item) => [
+  //     new Date(item.timestamp).getTime(),
+  //     item.price,
+  //   ]) ?? [];
   // ?.filter((_, index) => index % 10 === 0) // reduce
 
+  return {
+    props: { borgStats, dataForPieChart },
+  };
   return {
     props: { borgStats, dataForPieChart, formattedChartData, priceInformation },
   };
