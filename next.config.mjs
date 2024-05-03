@@ -7,7 +7,7 @@ const nextConfig = {
     enabled: process.env.ANALYZE === "true",
   }),
   webpack: (config, { isServer }) => {
-    config.optimization.splitChunks = false; //
+    config.optimization.splitChunks = false;
     return config;
   },
 };

@@ -4,7 +4,6 @@ import Highcharts from "highcharts/highstock";
 import { useEffect, useState } from "react";
 
 interface HistoricalChartProps {
-  // chartData: HistoricalPricePeriod | undefined;
   selectedPeriod: HistoricalPeriod;
 }
 
@@ -30,17 +29,6 @@ export function HistoricalChart({
 
     return formattedChartData;
   };
-
-  // useEffect(() => {
-  //   if (chartData) {
-  //     const formattedChartData: number[][] =
-  //       chartData
-  //         ?.filter((_, index) => index % 10 === 0)
-  //         .map((item) => [new Date(item.timestamp).getTime(), item.price]) ??
-  //       [];
-  //     setHistoricalData({ day: formattedChartData });
-  //   }
-  // }, [chartData]);
 
   useEffect(() => {
     const fetchData = async () => {

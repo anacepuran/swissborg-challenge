@@ -1,29 +1,5 @@
-import { HistoricalPeriod } from "./types";
-
 export const BASE_API_URL =
   "https://borg-api-techchallenge.swissborg-stage.com/api/";
-
-export const HISTORICAL_PERIOD_OPTIONS: {
-  name: HistoricalPeriod;
-  displayName: string;
-}[] = [
-  {
-    name: "day",
-    displayName: "1D",
-  },
-  {
-    name: "month",
-    displayName: "1M",
-  },
-  {
-    name: "year",
-    displayName: "1Y",
-  },
-  {
-    name: "all",
-    displayName: "ALL",
-  },
-];
 
 export const STATS_TO_DISPLAY = [
   {

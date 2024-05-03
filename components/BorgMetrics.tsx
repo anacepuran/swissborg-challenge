@@ -25,10 +25,7 @@ export default function BorgMetrics({
       </div>
       <div className="separator" />
       <div className="chart-wrapper">
-        <HistoricalChart
-          // chartData={chartData}
-          selectedPeriod={selectedPeriod}
-        />
+        <HistoricalChart selectedPeriod={selectedPeriod} />
       </div>
       {/* PERIOD SELECTION BUTTONS */}
       <div className="grid grid-cols-4 w-full">
@@ -46,7 +43,7 @@ export default function BorgMetrics({
           className={`historical-chart-button ${
             selectedPeriod === "month" && "button-selected"
           }`}>
-          1D
+          1M
         </button>
         <button
           key={"year"}
@@ -54,7 +51,7 @@ export default function BorgMetrics({
           className={`historical-chart-button ${
             selectedPeriod === "year" && "button-selected"
           }`}>
-          1D
+          1Y
         </button>
         <button
           key={"all"}
@@ -62,7 +59,7 @@ export default function BorgMetrics({
           className={`historical-chart-button button-last ${
             selectedPeriod === "all" && "button-selected"
           }`}>
-          1D
+          ALL
         </button>
       </div>
     </div>
