@@ -55,22 +55,18 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        {props.formattedChartData && props.priceInformation && (
-          <BorgMetrics
-            chartData={props.formattedChartData}
-            priceInfo={props.priceInformation}
-          />
-        )}
+        <BorgMetrics
+          chartData={props.formattedChartData}
+          priceInfo={props.priceInformation}
+        />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
       </h2>
-      {props.borgStats && props.dataForPieChart && (
-        <BorgBreakdown
-          borgStats={props.borgStats}
-          pieChartData={props.dataForPieChart}
-        />
-      )}
+      <BorgBreakdown
+        borgStats={props.borgStats}
+        pieChartData={props.dataForPieChart}
+      />
     </div>
   );
 }

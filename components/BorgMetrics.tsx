@@ -6,7 +6,7 @@ import PriceInformation from "./PriceInformation";
 
 interface MetricsProps {
   chartData: number[][];
-  priceInfo: Record<string, Price>;
+  priceInfo: Record<string, Price> | undefined;
 }
 
 export default function BorgMetrics({ chartData, priceInfo }: MetricsProps) {
@@ -17,7 +17,7 @@ export default function BorgMetrics({ chartData, priceInfo }: MetricsProps) {
 
   return (
     <div className="historical-chart-wrapper">
-      <PriceInformation priceInformation={priceInfo} />
+      {priceInfo && <PriceInformation priceInformation={priceInfo} />}
       <div className="flex items-center" style={{ height: "240px" }}>
         {!chartData ? (
           <div className="loader-chart" />

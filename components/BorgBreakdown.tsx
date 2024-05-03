@@ -5,7 +5,7 @@ import Image from "next/image";
 import { SupplyChart } from "./SupplyChart";
 
 interface BreakdownProps {
-  borgStats: BorgStats;
+  borgStats: BorgStats | undefined;
   pieChartData: PieChartData[];
 }
 export default function BorgBreakdown({
@@ -13,6 +13,7 @@ export default function BorgBreakdown({
   pieChartData,
 }: BreakdownProps) {
   const BorgStatRow = (row: any) => {
+    if (!borgStats) return;
     const tokens = formatNumberWithCommas(borgStats[row.attrName + "Tokens"]);
     const percentage = formatNumberWithCommas(
       borgStats[row.attrName + "Percentage"]
