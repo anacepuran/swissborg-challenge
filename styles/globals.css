@@ -6,6 +6,10 @@
   --primary-color: #01c38d;
 }
 
+body {
+  font-family: 'TT Commons', sans-serif;
+}
+
 /* FONTS AND TEXTS */
 @font-face {
   font-family: 'TT Commons';

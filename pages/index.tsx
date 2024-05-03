@@ -48,7 +48,9 @@ export default function Page({
   return (
     <div className="flex flex-col items-center">
       <div className="banner">
-        <h1 className="text-4xl lg:text-6xl font-bold">BORG Token Metrics</h1>
+        <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold">
+          BORG Token Metrics
+        </h1>
         <p className="font-light">
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.

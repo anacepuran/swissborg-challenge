@@ -6,9 +6,5 @@ const nextConfig = {
   ...bundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
   }),
-  webpack: (config, { isServer }) => {
-    config.optimization.splitChunks = false;
-    return config;
-  },
 };
 export default nextConfig;

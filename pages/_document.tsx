@@ -5,6 +5,18 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+      <link
+        rel="preload"
+        href="fonts/TT-Commons-Light.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"></link>
+      <link
+        rel="preload"
+        href="fonts/TT-Commons-Medium.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"></link>
       <body>
         <Main />
         <NextScript />
