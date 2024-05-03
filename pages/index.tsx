@@ -6,6 +6,8 @@ import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = async () => {
+  const BASE_API_URL =
+    "https://borg-api-techchallenge.swissborg-stage.com/api/";
   // const [borgStats, historicalData, priceInformation]: [
   //   BorgStats | undefined,
   //   HistoricalPricePeriod | undefined,
@@ -15,7 +17,7 @@ export const getServerSideProps = async () => {
   //   fetchData<HistoricalPricePeriod>("historical-price/day"),
   //   fetchData<Record<string, Price>>("price"),
   // ]);
-  const resBorgStats = await fetch("borg-stats");
+  const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
   const borgStats: BorgStats = await resBorgStats.json();
   const dataForPieChart: PieChartData[] = borgStats
     ? STATS_TO_DISPLAY.map(
@@ -28,7 +30,7 @@ export const getServerSideProps = async () => {
       )
     : [];
 
-  const resHistoricalData = await fetch("borg-stats");
+  const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
   const historicalData: HistoricalPricePeriod = await resHistoricalData.json();
   const formattedChartData: number[][] =
     historicalData?.map((item) => [
