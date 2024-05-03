@@ -1,12 +1,63 @@
+import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
 import AreaChart from "highcharts-react-official";
+import { useEffect, useState } from "react";
 
 interface HistoricalChartProps {
-  reducedData: number[][] | null;
+  chartData: number[][] | undefined;
+  selectedPeriod: HistoricalPeriod;
 }
 
-export function HistoricalChart({ reducedData }: HistoricalChartProps) {
-  if (!reducedData) return <div className="loader-chart" />;
+export function HistoricalChart({
+  chartData,
+  selectedPeriod,
+}: HistoricalChartProps) {
+  const [historicalData, setHistoricalData] = useState<{
+    [key: string]: number[][];
+  }>({});
+
+  const fetchHistoricalData = async (
+    period: HistoricalPeriod
+  ): Promise<number[][]> => {
+    const response = await fetch(
+      `https://borg-api-techchallenge.swissborg-stage.com/api/historical-price/${period}`
+    );
+    const data: HistoricalPricePeriod = await response.json();
+    const formattedChartData: number[][] =
+      data
+        ?.filter((_, index) => index % 10 === 0)
+        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
+
+    return formattedChartData;
+  };
+
+  useEffect(() => {
+    if (chartData) {
+      setHistoricalData({ day: chartData });
+    }
+  }, [chartData]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!historicalData[selectedPeriod]) {
+          const response = await fetchHistoricalData(selectedPeriod);
+          setHistoricalData((prevData) => ({
+            ...prevData,
+            [selectedPeriod]: response,
+          }));
+        }
+      } catch (e) {
+        console.error("Error fetching historical data:", e);
+      }
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPeriod]);
+
+  if (!chartData || !historicalData[selectedPeriod])
+    return <div className="loader-chart" />;
+
   const options = {
     title: "",
     chart: {
@@ -88,7 +139,7 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
       {
         type: "area",
         name: "USD to BORG",
-        data: reducedData,
+        data: historicalData[selectedPeriod],
       },
     ],
     responsive: {

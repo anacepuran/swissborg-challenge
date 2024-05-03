@@ -1,6 +1,6 @@
 import BorgBreakdown from "@/components/BorgBreakdown";
 import BorgMetrics from "@/components/BorgMetrics";
-import { STATS_TO_DISPLAY } from "@/utils/configuration";
+import { BASE_API_URL, STATS_TO_DISPLAY } from "@/utils/configuration";
 import {
   BorgStats,
   HistoricalPricePeriod,
@@ -12,20 +12,15 @@ import type { InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = async () => {
   try {
-    const BASE_API_URL =
-      "https://borg-api-techchallenge.swissborg-stage.com/api/";
-    const [resBorgStats, resHistoricalData, resPriceInformation] =
-      await Promise.all([
-        fetch(BASE_API_URL + "borg-stats"),
-        fetch(BASE_API_URL + "historical-price/day"),
-        fetch(BASE_API_URL + "price"),
-      ]);
+    const [resStats, resHistorical, resPrice] = await Promise.all([
+      fetch(BASE_API_URL + "borg-stats"),
+      fetch(BASE_API_URL + "historical-price/day"),
+      fetch(BASE_API_URL + "price"),
+    ]);
 
-    const borgStats: BorgStats = await resBorgStats.json();
-    const priceInformation: Record<string, Price> =
-      await resPriceInformation.json();
-    const historicalData: HistoricalPricePeriod =
-      await resHistoricalData.json();
+    const borgStats: BorgStats = await resStats.json();
+    const historicalData: HistoricalPricePeriod = await resHistorical.json();
+    const priceInformation: Record<string, Price> = await resPrice.json();
 
     const dataForPieChart: PieChartData[] = borgStats
       ? STATS_TO_DISPLAY.map((stat) => ({
@@ -52,15 +47,18 @@ export const getServerSideProps = async () => {
     console.error("Error fetching data:", error);
     return {
       props: {
-        error: "Error fetching data",
+        error: "Error fetching data.",
       },
     };
   }
 };
 
-export default function Page(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) {
+export default function Page({
+  borgStats,
+  dataForPieChart,
+  formattedChartData,
+  priceInformation,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className="flex flex-col items-center">
       <div className="banner">
@@ -70,17 +68,14 @@ export default function Page(
           SwissBorg Ecosystem.
         </p>
         <BorgMetrics
-          chartData={props.formattedChartData}
-          priceInformation={props.priceInformation}
+          chartData={formattedChartData}
+          priceInformation={priceInformation}
         />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
       </h2>
-      <BorgBreakdown
-        borgStats={props.borgStats}
-        pieChartData={props.dataForPieChart}
-      />
+      <BorgBreakdown borgStats={borgStats} pieChartData={dataForPieChart} />
     </div>
   );
 }

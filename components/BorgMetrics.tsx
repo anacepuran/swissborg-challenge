@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPeriod, HistoricalPricePeriod, Price } from "../utils/types";
+import { HistoricalPeriod, Price } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
 import PriceInformation from "./PriceInformation";
 
@@ -15,38 +15,8 @@ export default function BorgMetrics({
 }: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
 
-  const [historicalData, setHistoricalData] = useState<{
-    [key: string]: number[][];
-  }>({});
-
-  useEffect(() => {
-    if (chartData) {
-      setHistoricalData((prevData) => ({ ...prevData, day: chartData }));
-    }
-  }, [chartData]);
-
-  const fetchHistoricalData = async (
-    period: HistoricalPeriod
-  ): Promise<number[][]> => {
-    const response = await fetch(
-      `https://borg-api-techchallenge.swissborg-stage.com/api/historical-price/${period}`
-    );
-    const data: HistoricalPricePeriod = await response.json();
-    const formattedChartData: number[][] =
-      data
-        ?.filter((_, index) => index % 10 === 0)
-        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
-    return formattedChartData;
-  };
-
   const handlePeriodSelection = async (selected: HistoricalPeriod) => {
     setSelectedPeriod(selected);
-    try {
-      const response = await fetchHistoricalData(selected);
-      setHistoricalData((prevData) => ({ ...prevData, [selected]: response }));
-    } catch (e) {
-      console.error("Error fetching historical data:", e);
-    }
   };
 
   return (
@@ -57,7 +27,8 @@ export default function BorgMetrics({
           <div className="loader-chart" />
         ) : (
           <HistoricalChart
-            reducedData={historicalData[selectedPeriod] ?? chartData}
+            chartData={chartData}
+            selectedPeriod={selectedPeriod}
           />
         )}
       </div>
