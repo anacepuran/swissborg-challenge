@@ -1,7 +1,12 @@
 import BorgBreakdown from "@/components/BorgBreakdown";
 import BorgMetrics from "@/components/BorgMetrics";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
-import { BorgStats, HistoricalPricePeriod, PieChartData } from "@/utils/types";
+import {
+  BorgStats,
+  HistoricalPricePeriod,
+  PieChartData,
+  Price,
+} from "@/utils/types";
 import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
@@ -9,12 +14,16 @@ export const getServerSideProps = async () => {
   try {
     const BASE_API_URL =
       "https://borg-api-techchallenge.swissborg-stage.com/api/";
-    const [resBorgStats, resHistoricalData] = await Promise.all([
-      fetch(BASE_API_URL + "borg-stats"),
-      fetch(BASE_API_URL + "historical-price/day"),
-    ]);
+    const [resBorgStats, resHistoricalData, resPriceInformation] =
+      await Promise.all([
+        fetch(BASE_API_URL + "borg-stats"),
+        fetch(BASE_API_URL + "historical-price/day"),
+        fetch(BASE_API_URL + "price"),
+      ]);
 
     const borgStats: BorgStats = await resBorgStats.json();
+    const priceInformation: Record<string, Price> =
+      await resPriceInformation.json();
     const historicalData: HistoricalPricePeriod =
       await resHistoricalData.json();
 
@@ -32,7 +41,12 @@ export const getServerSideProps = async () => {
         .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
 
     return {
-      props: { borgStats, dataForPieChart, formattedChartData },
+      props: {
+        borgStats,
+        dataForPieChart,
+        formattedChartData,
+        priceInformation,
+      },
     };
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -55,7 +69,10 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics chartData={props.formattedChartData} />
+        <BorgMetrics
+          chartData={props.formattedChartData}
+          priceInformation={props.priceInformation}
+        />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply

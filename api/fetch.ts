@@ -1,4 +1,4 @@
-import { HistoricalPricePeriod, Price } from "@/utils/types";
+import { HistoricalPricePeriod } from "@/utils/types";
 import { useEffect, useState } from "react";
 
 const API_URL = "https://borg-api-techchallenge.swissborg-stage.com/api";
@@ -36,22 +36,22 @@ export function useFetchHistoricalPriceData(endpoint: string): {
   return { data };
 }
 
-export function useFetchPriceData(): {
-  data: Record<string, Price> | null;
-} {
-  const [data, setData] = useState<Record<string, Price> | null>(null);
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      try {
-        const response = await fetch(`${API_URL}/price`);
-        const responseData: Record<string, Price> = await response.json();
-        setData(responseData);
-      } catch (error) {
-        console.error("Error fetching data");
-      }
-    };
-    fetchDataAsync();
-  }, []);
+// export function useFetchPriceData(): {
+//   data: Record<string, Price> | null;
+// } {
+//   const [data, setData] = useState<Record<string, Price> | null>(null);
+//   useEffect(() => {
+//     const fetchDataAsync = async () => {
+//       try {
+//         const response = await fetch(`${API_URL}/price`);
+//         const responseData: Record<string, Price> = await response.json();
+//         setData(responseData);
+//       } catch (error) {
+//         console.error("Error fetching data");
+//       }
+//     };
+//     fetchDataAsync();
+//   }, []);
 
-  return { data: data };
-}
+//   return { data: data };
+// }

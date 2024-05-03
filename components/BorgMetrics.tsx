@@ -1,47 +1,45 @@
-import { useFetchHistoricalPriceData } from "@/api/fetch";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPeriod } from "../utils/types";
+import { HistoricalPeriod, Price } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
 import PriceInformation from "./PriceInformation";
 
 interface MetricsProps {
   chartData: number[][] | undefined;
+  priceInformation: Record<string, Price> | undefined;
 }
 
-export default function BorgMetrics({ chartData }: MetricsProps) {
+export default function BorgMetrics({
+  chartData,
+  priceInformation,
+}: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
 
-  const { data: historicalChartData } = useFetchHistoricalPriceData(
-    `historical-price/${selectedPeriod}`
-  );
+  const historicalChartData = useMemo(() => {
+    return chartData;
+  }, [chartData]);
+
+  // const { data: historicalChartData } = useFetchHistoricalPriceData(
+  //   `historical-price/${selectedPeriod}`
+  // );
 
   const handlePeriodSelection = (selected: HistoricalPeriod) => {
     setSelectedPeriod(selected);
   };
 
-  useEffect(() => {
-    if (chartData) {
-      sessionStorage.setItem(
-        `historical-price/day`,
-        JSON.stringify({ series: chartData })
-      );
-    }
-  }, [chartData]);
-
-  useEffect(() => {
-    if (historicalChartData) {
-      sessionStorage.setItem(
-        `historical-price/${selectedPeriod}`,
-        JSON.stringify({ series: historicalChartData })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [historicalChartData]);
+  // useEffect(() => {
+  //   if (historicalChartData) {
+  //     sessionStorage.setItem(
+  //       `historical-price/${selectedPeriod}`,
+  //       JSON.stringify({ series: historicalChartData })
+  //     );
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [historicalChartData]);
 
   return (
     <div className="historical-chart-wrapper">
-      <PriceInformation />
+      <PriceInformation priceInformation={priceInformation} />
       <div className="flex items-center" style={{ height: "240px" }}>
         {!historicalChartData ? (
           <div className="loader-chart" />

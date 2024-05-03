@@ -104,9 +104,5 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
       ],
     },
   };
-  return (
-    <div>
-      <AreaChart highcharts={Highcharts} options={options} />
-    </div>
-  );
+  return <AreaChart highcharts={Highcharts} options={options} />;
 }
