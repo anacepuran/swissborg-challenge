@@ -1,11 +1,14 @@
 import { PieChartData } from "@/utils/types";
 import Highcharts from "highcharts";
-import PieChart from "highcharts-react-official";
+// import PieChart from "highcharts-react-official";
+import dynamic from "next/dynamic";
 import React from "react";
 
 interface SupplyChartProps {
   chartData: PieChartData[] | undefined;
 }
+
+const PieChart = dynamic(() => import("highcharts-react-official"));
 
 export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
   if (!chartData) return <div className="loader-chart" />;
