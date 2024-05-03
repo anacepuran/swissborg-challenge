@@ -24,7 +24,7 @@ export default function PriceInformation({
           unoptimized
         />
         <div className="font-light text-left">
-          <p>USD{priceInformation["usd"].price?.toFixed(3)}</p>
+          <p>USD {priceInformation["usd"].price?.toFixed(3)}</p>
           <p
             className="text-primary text-sm"
             style={{

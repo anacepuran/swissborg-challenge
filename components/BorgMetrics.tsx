@@ -14,13 +14,13 @@ export default function BorgMetrics({
   priceInformation,
 }: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
+
   const [historicalData, setHistoricalData] = useState<{
     [key: string]: number[][];
   }>({});
 
   useEffect(() => {
     if (chartData) {
-      // Cache the initial server-side data for "day" period
       setHistoricalData((prevData) => ({ ...prevData, day: chartData }));
     }
   }, [chartData]);
@@ -28,7 +28,9 @@ export default function BorgMetrics({
   const fetchHistoricalData = async (
     period: HistoricalPeriod
   ): Promise<number[][]> => {
-    const response = await fetch(`/api/historical-price/${period}`);
+    const response = await fetch(
+      `https://borg-api-techchallenge.swissborg-stage.com/api/historical-price/${period}`
+    );
     const data: HistoricalPricePeriod = await response.json();
     const formattedChartData: number[][] =
       data
