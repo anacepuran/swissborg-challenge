@@ -3,13 +3,12 @@ import BorgMetrics from "@/components/BorgMetrics";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats, HistoricalPricePeriod, PieChartData } from "@/utils/types";
 import { formatPieChartLabel } from "@/utils/utils";
+import type { InferGetServerSidePropsType } from "next";
 
 interface Props {
   borgStats: BorgStats;
   dataForPieChart: PieChartData[];
 }
-
-import type { InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = async () => {
   const res = await fetch(
@@ -29,18 +28,17 @@ export const getServerSideProps = async () => {
   );
   const historicalDataPreComputed: HistoricalPricePeriod =
     await resHistorical.json();
-  const formattedChartData: any = historicalDataPreComputed
-    ?.filter((_, index) => index % 10 === 0) // reduce
-    .map((item) => [new Date(item.timestamp).getTime(), item.price]);
+  const formattedChartData: number[][] =
+    historicalDataPreComputed
+      ?.filter((_, index) => index % 10 === 0) // reduce
+      .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
 
   return { props: { borgStats, dataForPieChart, formattedChartData } };
 };
 
-export default function Page({
-  borgStats,
-  dataForPieChart,
-  formattedChartData,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   return (
     <div className="flex flex-col items-center">
       <div className="banner">
@@ -49,12 +47,15 @@ export default function Page({
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics chartData={formattedChartData} />
+        <BorgMetrics chartData={props.formattedChartData} />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply
       </h2>
-      <BorgBreakdown borgStats={borgStats} pieChartData={dataForPieChart} />
+      <BorgBreakdown
+        borgStats={props.borgStats}
+        pieChartData={props.dataForPieChart}
+      />
     </div>
   );
 }

@@ -1,10 +1,10 @@
-import { ChartData } from "@/utils/types";
 import Highcharts from "highcharts";
 import AreaChart from "highcharts-react-official";
 
 interface HistoricalChartProps {
-  reducedData: ChartData[];
+  reducedData: number[][];
 }
+
 export function HistoricalChart({ reducedData }: HistoricalChartProps) {
   const options = {
     title: "",
