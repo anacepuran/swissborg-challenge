@@ -127,7 +127,7 @@ export function HistoricalChart({
     legend: { enabled: false },
     plotOptions: {
       area: {
-        animation: false,
+        // animation: false,
         color: "#01C38D",
         lineWidth: 1,
         fillColor: {

@@ -7,9 +7,8 @@ import type { InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = async () => {
   try {
-    const [resStats, resHistorical, resPrice] = await Promise.all([
+    const [resStats, resPrice] = await Promise.all([
       fetch(BASE_API_URL + "borg-stats"),
-      fetch(BASE_API_URL + "historical-price/day"),
       fetch(BASE_API_URL + "price"),
     ]);
 
