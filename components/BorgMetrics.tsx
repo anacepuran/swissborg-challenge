@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPeriod, Price } from "../utils/types";
+import { HistoricalPeriod, HistoricalPricePeriod, Price } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
 import PriceInformation from "./PriceInformation";
 
@@ -14,24 +14,38 @@ export default function BorgMetrics({
   priceInformation,
 }: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
+  const [historicalData, setHistoricalData] = useState<{
+    [key: string]: number[][];
+  }>({});
 
-  // const { data: historicalChartData, loading } = useFetchHistoricalPriceData(
-  //   `historical-price/${selectedPeriod}`
-  // );
+  useEffect(() => {
+    if (chartData) {
+      // Cache the initial server-side data for "day" period
+      setHistoricalData((prevData) => ({ ...prevData, day: chartData }));
+    }
+  }, [chartData]);
 
-  const handlePeriodSelection = (selected: HistoricalPeriod) => {
-    setSelectedPeriod(selected);
+  const fetchHistoricalData = async (
+    period: HistoricalPeriod
+  ): Promise<number[][]> => {
+    const response = await fetch(`/api/historical-price/${period}`);
+    const data: HistoricalPricePeriod = await response.json();
+    const formattedChartData: number[][] =
+      data
+        ?.filter((_, index) => index % 10 === 0)
+        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
+    return formattedChartData;
   };
 
-  // useEffect(() => {
-  //   if (historicalChartData) {
-  //     sessionStorage.setItem(
-  //       `historical-price/${selectedPeriod}`,
-  //       JSON.stringify({ series: historicalChartData })
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [historicalChartData]);
+  const handlePeriodSelection = async (selected: HistoricalPeriod) => {
+    setSelectedPeriod(selected);
+    try {
+      const response = await fetchHistoricalData(selected);
+      setHistoricalData((prevData) => ({ ...prevData, [selected]: response }));
+    } catch (e) {
+      console.error("Error fetching historical data:", e);
+    }
+  };
 
   return (
     <div className="historical-chart-wrapper">
@@ -40,7 +54,9 @@ export default function BorgMetrics({
         {!chartData ? (
           <div className="loader-chart" />
         ) : (
-          <HistoricalChart reducedData={chartData} />
+          <HistoricalChart
+            reducedData={historicalData[selectedPeriod] ?? chartData}
+          />
         )}
       </div>
       <div className="grid grid-cols-4 w-full">
