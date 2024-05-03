@@ -12,7 +12,6 @@
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^6.0.0",
     "@next/bundle-analyzer": "^14.2.3",
-    "axios": "^1.6.8",
     "highcharts": "^11.4.1",
     "highcharts-react-official": "^3.2.1",
     "next": "14.2.3",

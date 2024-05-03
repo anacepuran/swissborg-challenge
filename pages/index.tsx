@@ -26,13 +26,6 @@ export const getServerSideProps = async () => {
     fetchData<HistoricalPricePeriod>("historical-price/day"),
     fetchData<Record<string, Price>>("price"),
   ]);
-
-  // const BASE_API_URL =
-  //   "https://borg-api-techchallenge.swissborg-stage.com/api/";
-  // const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
-  // const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
-
-  // const borgStats: BorgStats = await resBorgStats.json();
   const dataForPieChart: PieChartData[] = borgStats
     ? STATS_TO_DISPLAY.map(
         (stat) =>
@@ -44,22 +37,12 @@ export const getServerSideProps = async () => {
       )
     : [];
 
-  // const historicalDataPreComputed: HistoricalPricePeriod =
-  //   await resHistoricalData.json();
   const formattedChartData: number[][] =
     historicalData?.map((item) => [
       new Date(item.timestamp).getTime(),
       item.price,
     ]) ?? [];
   // ?.filter((_, index) => index % 10 === 0) // reduce
-
-  // localStorage.setItem(
-  //   "historical-price/day",
-  //   JSON.stringify(formattedChartData)
-  // );
-
-  // const resPriceInfo = await fetch(BASE_API_URL + "price");
-  // const priceInformation: Record<string, Price> = await resPriceInfo.json();
 
   return {
     props: { borgStats, dataForPieChart, formattedChartData, priceInformation },
@@ -69,8 +52,6 @@ export const getServerSideProps = async () => {
 export default function Page(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-  console.log("PROPS");
-  console.log(props);
   return (
     <div className="flex flex-col items-center">
       <div className="banner">
