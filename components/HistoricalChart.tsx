@@ -1,6 +1,6 @@
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
-import Highcharts from "highcharts";
-import AreaChart from "highcharts-react-official";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts/highstock";
 import { useEffect, useState } from "react";
 
 interface HistoricalChartProps {
@@ -167,5 +167,5 @@ export function HistoricalChart({
       ],
     },
   };
-  return <AreaChart highcharts={Highcharts} options={options} />;
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
 }
