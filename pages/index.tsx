@@ -1,7 +1,12 @@
 import BorgBreakdown from "@/components/BorgBreakdown";
 import BorgMetrics from "@/components/BorgMetrics";
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
-import { BorgStats, HistoricalPricePeriod, PieChartData } from "@/utils/types";
+import {
+  BorgStats,
+  HistoricalPricePeriod,
+  PieChartData,
+  Price,
+} from "@/utils/types";
 import { formatPieChartLabel } from "@/utils/utils";
 import type { InferGetServerSidePropsType } from "next";
 
@@ -11,10 +16,13 @@ interface Props {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch(
-    "https://borg-api-techchallenge.swissborg-stage.com/api/borg-stats"
-  );
-  const borgStats: BorgStats = await res.json();
+  const BASE_API_URL =
+    "https://borg-api-techchallenge.swissborg-stage.com/api/";
+  const resBorgStats = await fetch(BASE_API_URL + "borg-stats");
+  const resHistoricalData = await fetch(BASE_API_URL + "historical-price/day");
+  const resPriceInfo = await fetch(BASE_API_URL + "price");
+
+  const borgStats: BorgStats = await resBorgStats.json();
   const dataForPieChart: PieChartData[] = STATS_TO_DISPLAY.map(
     (stat) =>
       ({
@@ -23,17 +31,19 @@ export const getServerSideProps = async () => {
         color: stat.color,
       } as PieChartData)
   );
-  const resHistorical = await fetch(
-    "https://borg-api-techchallenge.swissborg-stage.com/api/historical-price/day"
-  );
+
   const historicalDataPreComputed: HistoricalPricePeriod =
-    await resHistorical.json();
+    await resHistoricalData.json();
   const formattedChartData: number[][] =
     historicalDataPreComputed
       ?.filter((_, index) => index % 10 === 0) // reduce
       .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
 
-  return { props: { borgStats, dataForPieChart, formattedChartData } };
+  const priceInformation: Record<string, Price> = await resPriceInfo.json();
+
+  return {
+    props: { borgStats, dataForPieChart, formattedChartData, priceInformation },
+  };
 };
 
 export default function Page(
@@ -47,7 +57,10 @@ export default function Page(
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics chartData={props.formattedChartData} />
+        <BorgMetrics
+          chartData={props.formattedChartData}
+          priceInfo={props.priceInformation}
+        />
       </div>
       <h2 className="text-4xl font-bold text-center p-6">
         Breakdown of BORG&apos;s circulating supply

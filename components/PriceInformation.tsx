@@ -1,21 +1,14 @@
 import Image from "next/image";
-import { useMemo } from "react";
-import { useFetchData } from "../api/fetch";
 import { Price } from "../utils/types";
 import { getPriceColor } from "../utils/utils";
 
-export default function PriceInformation() {
-  const { data: priceInformation } =
-    useFetchData<Record<string, Price>>("price");
+interface PriceInformationProps {
+  priceInformation: Record<string, Price>;
+}
 
-  const price = useMemo(
-    () => (priceInformation ? priceInformation["usd"].price?.toFixed(3) : null),
-    [priceInformation]
-  );
-  const change = useMemo(() => {
-    return priceInformation ? priceInformation["usd"].change24h : null;
-  }, [priceInformation]);
-
+export default function PriceInformation({
+  priceInformation,
+}: PriceInformationProps) {
   return (
     <>
       <div className="historical-chart-header flex gap-3">
@@ -29,12 +22,20 @@ export default function PriceInformation() {
         />
         {priceInformation && (
           <div className="font-light text-left">
-            <p>USD {price ?? <div className="loader" />}</p>
-            {change && (
+            <p>
+              USD{" "}
+              {priceInformation["usd"].price?.toFixed(3) ?? (
+                <div className="loader" />
+              )}
+            </p>
+            {priceInformation["usd"].change24h && (
               <p
                 className="text-primary text-sm"
-                style={{ color: getPriceColor(change) }}>
-                {change}% <span className="text-primary">24 Hours</span>
+                style={{
+                  color: getPriceColor(priceInformation["usd"].change24h),
+                }}>
+                {priceInformation["usd"].change24h}%{" "}
+                <span className="text-primary">24 Hours</span>
               </p>
             )}
           </div>

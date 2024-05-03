@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { HISTORICAL_PERIOD_OPTIONS } from "../utils/configuration";
-import { HistoricalPeriod } from "../utils/types";
+import { HistoricalPeriod, Price } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
+import PriceInformation from "./PriceInformation";
 
 interface MetricsProps {
   chartData: number[][];
+  priceInfo: Record<string, Price>;
 }
 
-export default function BorgMetrics({ chartData }: MetricsProps) {
+export default function BorgMetrics({ chartData, priceInfo }: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
   const handlePeriodSelection = (selected: HistoricalPeriod) => {
     setSelectedPeriod(selected);
@@ -15,7 +17,7 @@ export default function BorgMetrics({ chartData }: MetricsProps) {
 
   return (
     <div className="historical-chart-wrapper">
-      {/* <PriceInformation /> */}
+      <PriceInformation priceInformation={priceInfo} />
       <div className="flex items-center" style={{ height: "240px" }}>
         {!chartData ? (
           <div className="loader-chart" />
