@@ -74,6 +74,7 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
       area: {
         animation: false,
         color: "#01C38D",
+        lineWidth: 1,
         fillColor: {
           linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
           stops: [
@@ -81,7 +82,6 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
             [1, "rgba(1, 195, 141, .5)"],
           ],
         },
-        lineWidth: 1,
       },
     },
     series: [
@@ -89,7 +89,6 @@ export function HistoricalChart({ reducedData }: HistoricalChartProps) {
         type: "area",
         name: "USD to BORG",
         data: reducedData,
-        boostThreshold: 1,
       },
     ],
     responsive: {

@@ -11,38 +11,39 @@ interface MetricsProps {
 
 export default function BorgMetrics({ chartData }: MetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
-  const handlePeriodSelection = (selected: HistoricalPeriod) => {
-    setSelectedPeriod(selected);
-  };
-
-  const [firstLoad, setFirstLoad] = useState(true);
-  useEffect(() => {
-    if (firstLoad && chartData) {
-      console.log("*** CACHE ***");
-      localStorage.setItem(
-        `historical-price/${selectedPeriod}`,
-        JSON.stringify({ series: chartData })
-      );
-      setFirstLoad(false);
-    }
-  }, [firstLoad]);
 
   const { data: historicalChartData } = useFetchHistoricalPriceData(
     `historical-price/${selectedPeriod}`
   );
 
+  const handlePeriodSelection = (selected: HistoricalPeriod) => {
+    setSelectedPeriod(selected);
+  };
+
   useEffect(() => {
-    localStorage.setItem(
-      `historical-price/${selectedPeriod}`,
-      JSON.stringify({ series: historicalChartData })
-    );
+    if (chartData) {
+      sessionStorage.setItem(
+        `historical-price/day`,
+        JSON.stringify({ series: chartData })
+      );
+    }
+  }, [chartData]);
+
+  useEffect(() => {
+    if (historicalChartData) {
+      sessionStorage.setItem(
+        `historical-price/${selectedPeriod}`,
+        JSON.stringify({ series: historicalChartData })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [historicalChartData]);
 
   return (
     <div className="historical-chart-wrapper">
       <PriceInformation />
       <div className="flex items-center" style={{ height: "240px" }}>
-        {!chartData ? (
+        {!historicalChartData ? (
           <div className="loader-chart" />
         ) : (
           <HistoricalChart reducedData={historicalChartData} />
@@ -66,7 +67,4 @@ export default function BorgMetrics({ chartData }: MetricsProps) {
       </div>
     </div>
   );
-}
-function useFetchHistoricalData<T>(arg0: string): { data: any } {
-  throw new Error("Function not implemented.");
 }

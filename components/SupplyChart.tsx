@@ -18,6 +18,11 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
         fontWeight: "normal",
         fontSize: "18px",
       },
+      margin: [0, 0, 0, 0],
+      spacingTop: 0,
+      spacingBottom: 0,
+      spacingLeft: 0,
+      spacingRight: 0,
     },
     plotOptions: {
       series: {

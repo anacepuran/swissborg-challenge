@@ -11,11 +11,8 @@ export function useFetchHistoricalPriceData(endpoint: string): {
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
-        console.log(endpoint);
-        const cachedItem = localStorage.getItem(endpoint);
-        console.log(cachedItem);
+        const cachedItem = sessionStorage.getItem(endpoint);
         if (cachedItem) {
-          console.log("*** FROM CACHE ***");
           setData(JSON.parse(cachedItem).series);
         } else {
           const response = await fetch(`${API_URL}/${endpoint}`);
@@ -27,8 +24,6 @@ export function useFetchHistoricalPriceData(endpoint: string): {
                 new Date(item.timestamp).getTime(),
                 item.price,
               ]) ?? [];
-          console.log("formattedChartData");
-          console.log(formattedChartData);
           setData(formattedChartData);
         }
       } catch (error) {
@@ -38,7 +33,7 @@ export function useFetchHistoricalPriceData(endpoint: string): {
     fetchDataAsync();
   }, [endpoint]);
 
-  return { data: data };
+  return { data };
 }
 
 export function useFetchPriceData(): {
