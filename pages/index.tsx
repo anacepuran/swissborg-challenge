@@ -34,9 +34,16 @@ export const getServerSideProps = async () => {
   const historicalDataPreComputed: HistoricalPricePeriod =
     await resHistoricalData.json();
   const formattedChartData: number[][] =
-    historicalDataPreComputed
-      ?.filter((_, index) => index % 10 === 0) // reduce
-      .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
+    historicalDataPreComputed?.map((item) => [
+      new Date(item.timestamp).getTime(),
+      item.price,
+    ]) ?? [];
+  // ?.filter((_, index) => index % 10 === 0) // reduce
+
+  // localStorage.setItem(
+  //   "historical-price/day",
+  //   JSON.stringify(formattedChartData)
+  // );
 
   const resPriceInfo = await fetch(BASE_API_URL + "price");
   const priceInformation: Record<string, Price> = await resPriceInfo.json();
