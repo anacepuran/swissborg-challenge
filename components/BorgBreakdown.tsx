@@ -19,9 +19,9 @@ export default function BorgBreakdown({
         <div className="flex gap-2">
           <Image
             src={"icons/" + row.icon}
-            alt={`${row.title} - Icon`}
-            width={32}
-            height={32}
+            alt={`${row.title}`}
+            width={12}
+            height={12}
             style={{ width: "2.6rem", height: "auto" }}
             priority
             unoptimized
@@ -59,7 +59,7 @@ export default function BorgBreakdown({
 
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-2 pb-20 max-w-3xl">
-      <div className="flex flex-col justify-center p-0 m-0">
+      <div className="flex flex-col justify-center">
         {borgStats &&
           STATS_TO_DISPLAY.map((stat) => {
             return <div key={stat.attrName}>{BorgStatRow(stat)}</div>;

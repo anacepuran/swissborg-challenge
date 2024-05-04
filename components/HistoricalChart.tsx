@@ -61,7 +61,7 @@ export function HistoricalChart({
     title: "",
     chart: {
       type: "area",
-      animation: true,
+      animation: false,
       backgroundColor: "rgba(25, 30, 41, 0.9)",
       style: {
         fontFamily: "TT Commons, sans-serif",
@@ -116,7 +116,7 @@ export function HistoricalChart({
     legend: { enabled: false },
     plotOptions: {
       area: {
-        animation: true,
+        animation: false,
         color: "#01C38D",
         lineWidth: 1,
         fillColor: {
