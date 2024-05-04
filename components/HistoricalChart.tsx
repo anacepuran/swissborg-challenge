@@ -1,9 +1,10 @@
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
-import { useEffect, useState } from "react";
-
 import dynamic from "next/dynamic";
-const AreaChart = dynamic(() => import("highcharts-react-official"));
+import { useEffect, useState } from "react";
+const AreaChart = dynamic(() => import("highcharts-react-official"), {
+  ssr: false,
+});
 
 interface HistoricalChartProps {
   selectedPeriod: HistoricalPeriod;
@@ -69,9 +70,7 @@ export function HistoricalChart({
         fontSize: "14px",
       },
     },
-    credits: {
-      enabled: false,
-    },
+    credits: { enabled: false },
     xAxis: {
       // showFirstLabel: false,
       // showLastLabel: false,
