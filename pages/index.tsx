@@ -40,11 +40,17 @@ export const getServerSideProps = async () => {
   }
 };
 
-export default function Page({
-  borgStats,
-  dataForPieChart,
-  priceInformation,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
+  if (!props)
+    return (
+      <div
+        style={{ height: "100vh" }}
+        className="w-full flex items-center justify-center">
+        <div className="loader-chart" />;
+      </div>
+    );
   return (
     <div className="flex flex-col items-center">
       <div className="banner p-8 lg:p-12">
@@ -56,12 +62,15 @@ export default function Page({
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
-        <BorgMetrics priceInformation={priceInformation} />
+        <BorgMetrics priceInformation={props.priceInformation} />
       </div>
       <h2 className="text-2xl md:text-4xl lg:text-4xl font-bold text-center p-8">
         Breakdown of BORG&apos;s circulating supply
       </h2>
-      <BorgBreakdown borgStats={borgStats} pieChartData={dataForPieChart} />
+      <BorgBreakdown
+        borgStats={props.borgStats}
+        pieChartData={props.dataForPieChart}
+      />
     </div>
   );
 }
