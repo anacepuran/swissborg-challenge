@@ -1,14 +1,15 @@
 import { PieChartData } from "@/utils/types";
 import Highcharts from "highcharts";
-// import PieChart from "highcharts-react-official";
-import dynamic from "next/dynamic";
+import PieChart from "highcharts-react-official";
 import React from "react";
 
 interface SupplyChartProps {
   chartData: PieChartData[] | undefined;
 }
 
-const PieChart = dynamic(() => import("highcharts-react-official"));
+// const PieChart = dynamic(() => import("highcharts-react-official"), {
+//   ssr: false,
+// });
 
 export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
   if (!chartData) return <div className="loader-chart" />;
@@ -25,6 +26,7 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
       },
       margin: [0, 0, 0, 0],
     },
+
     plotOptions: {
       series: {
         animation: false,
@@ -51,11 +53,11 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
   };
 
   return (
-    <div id="container" className="supply-chart-wrapper">
+    <div id="container" className="pie-chart-wrapper">
       <PieChart
         highcharts={Highcharts}
         options={options}
-        // containerProps={{ style: { height: "auto", width: "100%" } }}
+        containerProps={{ style: { height: "auto", width: "100%" } }}
       />
     </div>
   );

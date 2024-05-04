@@ -47,9 +47,10 @@ export default function Page({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div className="flex flex-col items-center">
-      <div className="banner">
+      <div className="banner p-8 lg:p-12">
         <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold">
-          BORG Token Metrics
+          <span className="text-5xl md:text-6xl lg:text-6xl">BORG</span> Token
+          Metrics
         </h1>
         <p className="font-light">
           Deep-dive into the statistics of BORG and the mechanics of the full
@@ -57,7 +58,7 @@ export default function Page({
         </p>
         <BorgMetrics priceInformation={priceInformation} />
       </div>
-      <h2 className="text-4xl font-bold text-center p-6">
+      <h2 className="text-2xl md:text-4xl lg:text-4xl font-bold text-center p-8">
         Breakdown of BORG&apos;s circulating supply
       </h2>
       <BorgBreakdown borgStats={borgStats} pieChartData={dataForPieChart} />

@@ -19,14 +19,12 @@ export default function BorgMetrics({
   };
 
   return (
-    <div className="historical-chart-wrapper">
+    <div className="chart-card">
       <div className="historical-chart-header">
         <PriceInformation priceInformation={priceInformation} />
       </div>
       <div className="separator" />
-      <div className="chart-wrapper">
-        <HistoricalChart selectedPeriod={selectedPeriod} />
-      </div>
+      <HistoricalChart selectedPeriod={selectedPeriod} />
       {/* PERIOD SELECTION BUTTONS */}
       <div className="grid grid-cols-4 w-full">
         <button

@@ -13,7 +13,7 @@ export default function Document() {
         crossOrigin="anonymous"></link>
       <link
         rel="preload"
-        href="fonts/TT-Commons-Medium.woff2"
+        href="fonts/TT-Commons-DemiBold.woff2"
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"></link>

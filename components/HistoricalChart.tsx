@@ -1,11 +1,8 @@
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
-// import AreaChart from "highcharts-react-official";
 import { useEffect, useState } from "react";
 
 import dynamic from "next/dynamic";
-
-// const Highcharts = dynamic(() => import("highcharts/highcharts"));
 const AreaChart = dynamic(() => import("highcharts-react-official"));
 
 interface HistoricalChartProps {
@@ -53,15 +50,18 @@ export function HistoricalChart({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
-  if (!historicalData[selectedPeriod]) return <div className="loader-chart" />;
+  if (!historicalData[selectedPeriod])
+    return (
+      <div className="area-chart-wrapper">
+        <div className="loader-chart" />
+      </div>
+    );
 
   const options = {
     title: "",
     chart: {
       type: "area",
-      height: 160,
-      width: 500,
-      animation: false,
+      animation: true,
       backgroundColor: "rgba(25, 30, 41, 0.9)",
       style: {
         fontFamily: "TT Commons, sans-serif",
@@ -73,8 +73,8 @@ export function HistoricalChart({
       enabled: false,
     },
     xAxis: {
-      minPadding: 0,
-      maxPadding: 0,
+      // showFirstLabel: false,
+      // showLastLabel: false,
       type: "datetime",
       dateTimeLabelFormats: {
         hour: "%H:%M",
@@ -88,6 +88,7 @@ export function HistoricalChart({
         dashStyle: "Dash",
         width: 0.5,
       },
+
       labels: {
         reserveSpace: false,
         y: 5,
@@ -100,34 +101,29 @@ export function HistoricalChart({
       minTickInterval: 4 * 3600 * 1000,
     },
     yAxis: {
-      minPadding: 0,
-      maxPadding: 0,
-      minMargin: 0,
-      maxMargin: 0,
+      showFirstLabel: false,
+
       title: "",
-      gridLineWidth: 0.5,
       opposite: true,
       labels: {
         reserveSpace: false,
-        overflow: "justify",
-        x: -10,
-        style: {
-          color: "#FFF",
-        },
+        x: -12,
+        style: { color: "#FFF" },
       },
-      tickWidth: 0,
+      gridLineColor: "rgba(255,255,255,0.2)",
+      gridLineWidth: 0.5,
     },
     legend: { enabled: false },
     plotOptions: {
       area: {
-        animation: false,
+        animation: true,
         color: "#01C38D",
         lineWidth: 1,
         fillColor: {
           linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
           stops: [
             [0, "rgba(255, 255, 255, 0)"],
-            [1, "rgba(1, 195, 141, .5)"],
+            [1, "rgba(1, 195, 141, .25)"],
           ],
         },
       },
@@ -139,26 +135,14 @@ export function HistoricalChart({
         data: historicalData[selectedPeriod],
       },
     ],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 600,
-          },
-          chartOptions: {
-            chart: { width: 320 },
-          },
-        },
-        {
-          condition: {
-            minWidth: 601,
-          },
-          chartOptions: {
-            chart: { width: 500 },
-          },
-        },
-      ],
-    },
   };
-  return <AreaChart highcharts={Highcharts} options={options} />;
+  return (
+    <div className="area-chart-wrapper">
+      <AreaChart
+        highcharts={Highcharts}
+        options={options}
+        containerProps={{ style: { height: "100%", width: "100%" } }}
+      />
+    </div>
+  );
 }

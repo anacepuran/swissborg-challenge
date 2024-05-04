@@ -50,7 +50,7 @@ export default function BorgBreakdown({
             </div>
           </div>
         </div>
-        <div className="separator mt-2 mb-2" />
+        <div className="separator m-1" />
       </>
     );
   };
@@ -58,16 +58,14 @@ export default function BorgBreakdown({
   if (!borgStats) return;
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-2 pb-20">
+    <div className="flex flex-col lg:grid lg:grid-cols-2 pb-20 max-w-3xl">
       <div className="flex flex-col justify-center p-0 m-0">
         {borgStats &&
           STATS_TO_DISPLAY.map((stat) => {
             return <div key={stat.attrName}>{BorgStatRow(stat)}</div>;
           })}
       </div>
-      <div className="pt-4">
-        <SupplyChart chartData={pieChartData} />
-      </div>
+      <SupplyChart chartData={pieChartData} />
     </div>
   );
 }
