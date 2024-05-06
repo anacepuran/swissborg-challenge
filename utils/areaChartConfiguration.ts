@@ -8,7 +8,7 @@ export function getAreaChartConfig(min: number, max: number) {
       type: "area",
       backgroundColor: "rgba(25, 30, 41, 0.9)",
       margin: [10, -5, 15, -5],
-      animation: false,
+      animation: true,
       style: {
         fontFamily: "TT Commons, sans-serif",
         fontWeight: "normal",
@@ -17,6 +17,7 @@ export function getAreaChartConfig(min: number, max: number) {
     },
     xAxis: {
       type: "datetime",
+      tickAmount: 5,
       showFirstLabel: false,
       tickWidth: 0,
       crosshair: {
@@ -29,10 +30,13 @@ export function getAreaChartConfig(min: number, max: number) {
       },
     },
     yAxis: {
+      title: {
+        enabled: false,
+      },
       max: max,
       min: min,
+      tickAmount: 5,
       showFirstLabel: false,
-      tickInterval: 0.02,
       opposite: true,
       labels: {
         x: -32,
@@ -45,7 +49,7 @@ export function getAreaChartConfig(min: number, max: number) {
     tooltip: {
       useHTML: true,
       formatter(this: Highcharts.TooltipFormatterContextObject) {
-        return getCustomTooltip(this.point.y);
+        return getCustomTooltip(this.point.y, this.point.category);
       },
       backgroundColor: "rgb(25, 30, 41)",
       style: { color: "#fff" },

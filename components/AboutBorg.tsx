@@ -3,7 +3,7 @@ import Image from "next/image";
 const ABOUT_BORG = {
   title: "What is BORG ?",
   description:
-    "The native token of the SwissBorg ecosystem, that provides utility, governance, and reward mechanisms and encourages community engagement.",
+    "The native token of the SwissBorg ecosystem, that provides utility, governance, and reward mechanisms to encourage community engagement.",
   keyFeatures: [
     {
       name: "Utility Token",
@@ -51,10 +51,7 @@ export default function AboutBorg() {
         priority
         unoptimized
       />
-      {/* <div>
-        <p>{ABOUT_BORG.shortDescription}</p>
-        <p>{ABOUT_BORG.longDescription}</p>
-      </div> */}
+      <p>{ABOUT_BORG.description}</p>
       <div className="separator" />
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-12">
         {ABOUT_BORG.keyFeatures.map((item) => (

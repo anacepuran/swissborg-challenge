@@ -14,13 +14,27 @@ export function formatPieChartLabel(name: string, color: string) {
           </div>`;
 }
 
-export function getCustomTooltip(value: number | undefined) {
+export function getCustomTooltip(
+  value: number | undefined,
+  timestamp: number | string
+) {
+  const formatter = new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const tooltipFormattedDate = formatter.format(
+    new Date(Number(timestamp) - 3600000)
+  );
   return (
     value &&
     `
+    <div>${tooltipFormattedDate}<div>
     <div style="display: flex; align-items: center; gap: 5px;">
       <div style="background: #01c38d; width:10px; height:10px; border-radius: 5px;"></div>
-      USD to BORG: <b>${value?.toFixed(2)}</b>
+      USD to BORG: <b>${value?.toFixed(3)}</b>
     </div>`
   );
 }

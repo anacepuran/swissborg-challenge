@@ -1,5 +1,6 @@
 import { getAreaChartConfig } from "@/utils/areaChartConfiguration";
-import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
+import { fetchHistoricalData } from "@/utils/fetch";
+import { HistoricalPeriod } from "@/utils/types";
 import * as Highcharts from "highcharts/highcharts";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
@@ -17,28 +18,13 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
     [key: string]: number[][];
   }>({});
 
-  const fetchHistoricalData = async (
-    period: HistoricalPeriod
-  ): Promise<number[][]> => {
-    const response = await fetch(
-      `https://borg-api-techchallenge.swissborg-stage.com/api/historical-price/${period}`
-    );
-    const data: HistoricalPricePeriod = await response.json();
-    const formattedChartData: number[][] =
-      data
-        ?.filter((item, index) => index % 10 === 0)
-        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
-
-    return formattedChartData;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (!historicalData[selectedPeriod]) {
           const response = await fetchHistoricalData(selectedPeriod);
-          setHistoricalData((prevData) => ({
-            ...prevData,
+          setHistoricalData((old) => ({
+            ...old,
             [selectedPeriod]: response,
           }));
         }
@@ -47,8 +33,7 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
       }
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedPeriod]);
+  }, [historicalData, selectedPeriod]);
 
   const chartOptions = useMemo(() => {
     const onlyValues =
