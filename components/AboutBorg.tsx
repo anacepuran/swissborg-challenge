@@ -69,7 +69,7 @@ export default function AboutBorg() {
                 priority
                 unoptimized
               />
-              <h3 className="text-xl font-bold">{item.name}</h3>
+              <h2 className="text-xl font-bold">{item.name}</h2>
             </div>
             <p className="text-justify mt-2">{item.description}</p>
           </div>
