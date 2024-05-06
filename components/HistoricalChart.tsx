@@ -1,6 +1,6 @@
 import { getAreaChartConfig } from "@/utils/areaChartConfiguration";
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
-import Highcharts from "highcharts";
+import Highcharts from "highcharts/highstock";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 
