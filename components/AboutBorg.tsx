@@ -52,10 +52,10 @@ export default function AboutBorg() {
         priority
         unoptimized
       />
-      <div>
+      {/* <div>
         <p>{ABOUT_BORG.shortDescription}</p>
         <p>{ABOUT_BORG.longDescription}</p>
-      </div>
+      </div> */}
       <div className="separator" />
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-12">
         {ABOUT_BORG.keyFeatures.map((item) => (

@@ -56,8 +56,8 @@ export default function Page(
     <div className="flex flex-col items-center">
       <div className="banner">
         <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold">
-          <span className="text-5xl md:text-6xl lg:text-6xl">BORG</span>
-          Token Metrics
+          <span className="text-5xl md:text-6xl lg:text-6xl">BORG</span> Token
+          Metrics
         </h1>
         <p>
           Deep-dive into the statistics of BORG and the mechanics of the full

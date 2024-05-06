@@ -1,6 +1,6 @@
 import { getAreaChartConfig } from "@/utils/areaChartConfiguration";
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
-import Highcharts from "highcharts/highstock";
+import * as Highcharts from "highcharts/highcharts";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 
@@ -76,7 +76,6 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
   return (
     <div className="area-chart-wrapper">
       <AreaChart
-        constructorType={"stockChart"}
         highcharts={Highcharts}
         options={chartOptions}
         containerProps={{ style: { height: "100%", width: "100%" } }}

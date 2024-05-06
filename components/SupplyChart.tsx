@@ -1,6 +1,6 @@
 import { pieChartOptions } from "@/utils/pieChartConfiguration";
 import { PieChartData } from "@/utils/types";
-import Highcharts from "highcharts";
+import * as Highcharts from "highcharts/highcharts";
 import dynamic from "next/dynamic";
 
 const PieChart = dynamic(() => import("highcharts-react-official"), {
