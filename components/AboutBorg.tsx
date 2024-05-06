@@ -2,9 +2,8 @@ import Image from "next/image";
 
 const ABOUT_BORG = {
   title: "What is BORG ?",
-  shortDescription: "the native token of the SwissBorg ecosystem",
-  longDescription:
-    "It provides utility, governance, and reward mechanisms while encouraging community engagement.",
+  description:
+    "The native token of the SwissBorg ecosystem, that provides utility, governance, and reward mechanisms and encourages community engagement.",
   keyFeatures: [
     {
       name: "Utility Token",

@@ -25,8 +25,9 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
     );
     const data: HistoricalPricePeriod = await response.json();
     const formattedChartData: number[][] =
-      data?.map((item) => [new Date(item.timestamp).getTime(), item.price]) ??
-      [];
+      data
+        ?.filter((item, index) => index % 10 === 0)
+        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
 
     return formattedChartData;
   };

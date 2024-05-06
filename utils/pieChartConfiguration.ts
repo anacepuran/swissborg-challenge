@@ -1,6 +1,6 @@
 export const pieChartOptions = {
   title: "",
-
+  credits: { enabled: false },
   chart: {
     type: "pie",
     style: {

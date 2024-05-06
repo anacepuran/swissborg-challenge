@@ -30,7 +30,7 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
   };
 
   return (
-    <div id="container" className="pie-chart-wrapper">
+    <div id="container" className="pie-chart-wrapper lg:ml-12">
       <PieChart
         highcharts={Highcharts}
         options={options}
