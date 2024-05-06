@@ -20,7 +20,6 @@ export default function PriceInformation({
           height={4}
           style={{ width: "4rem", height: "auto" }}
           priority
-          unoptimized
         />
         <div className="text-left">
           <p>USD {priceInformation["usd"].price?.toFixed(3)}</p>
