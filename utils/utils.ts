@@ -13,3 +13,14 @@ export function formatPieChartLabel(name: string, color: string) {
             <span style="flex: 1; margin-left: 4px;">${name}</span>
           </div>`;
 }
+
+export function getCustomTooltip(value: number | undefined) {
+  return (
+    value &&
+    `
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <div style="background: #01c38d; width:10px; height:10px; border-radius: 5px;"></div>
+      USD to BORG: <b>${value?.toFixed(2)}</b>
+    </div>`
+  );
+}

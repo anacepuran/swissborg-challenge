@@ -58,7 +58,7 @@ export default function BorgBreakdown({
   if (!borgStats) return;
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-2 pb-20 max-w-3xl">
+    <div className="flex flex-col lg:grid lg:grid-cols-2 lg:pb-10 md:pb-12 max-w-3xl">
       <div className="flex flex-col justify-center">
         {borgStats &&
           STATS_TO_DISPLAY.map((stat) => {

@@ -1,3 +1,4 @@
+import AboutBorg from "@/components/AboutBorg";
 import BorgBreakdown from "@/components/BorgBreakdown";
 import BorgMetrics from "@/components/BorgMetrics";
 import { BASE_API_URL, STATS_TO_DISPLAY } from "@/utils/configuration";
@@ -53,12 +54,12 @@ export default function Page(
     );
   return (
     <div className="flex flex-col items-center">
-      <div className="banner p-8 lg:p-12">
+      <div className="banner">
         <h1 className="text-4xl md:text-6xl lg:text-6xl font-bold">
-          <span className="text-5xl md:text-6xl lg:text-6xl">BORG</span> Token
-          Metrics
+          <span className="text-5xl md:text-6xl lg:text-6xl">BORG</span>
+          Token Metrics
         </h1>
-        <p className="font-light">
+        <p>
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </p>
@@ -71,6 +72,7 @@ export default function Page(
         borgStats={props.borgStats}
         pieChartData={props.dataForPieChart}
       />
+      <AboutBorg />
     </div>
   );
 }

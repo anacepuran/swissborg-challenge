@@ -1,7 +1,9 @@
+import { getAreaChartConfig } from "@/utils/areaChartConfiguration";
 import { HistoricalPeriod, HistoricalPricePeriod } from "@/utils/types";
 import Highcharts from "highcharts";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
 const AreaChart = dynamic(() => import("highcharts-react-official"), {
   ssr: false,
 });
@@ -10,10 +12,7 @@ interface HistoricalChartProps {
   selectedPeriod: HistoricalPeriod;
 }
 
-export function HistoricalChart({
-  // chartData,
-  selectedPeriod,
-}: HistoricalChartProps) {
+export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
   const [historicalData, setHistoricalData] = useState<{
     [key: string]: number[][];
   }>({});
@@ -26,9 +25,8 @@ export function HistoricalChart({
     );
     const data: HistoricalPricePeriod = await response.json();
     const formattedChartData: number[][] =
-      data
-        ?.filter((_, index) => index % 10 === 0)
-        .map((item) => [new Date(item.timestamp).getTime(), item.price]) ?? [];
+      data?.map((item) => [new Date(item.timestamp).getTime(), item.price]) ??
+      [];
 
     return formattedChartData;
   };
@@ -51,6 +49,23 @@ export function HistoricalChart({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
+  const chartOptions = useMemo(() => {
+    const onlyValues =
+      historicalData[selectedPeriod]?.map((point) => point[1]) ?? [];
+    const min = Math.min(...onlyValues) ?? 0;
+    const max = Math.max(...onlyValues) ?? 0;
+    return {
+      series: [
+        {
+          type: "area",
+          name: "USD to BORG",
+          data: historicalData[selectedPeriod],
+        },
+      ],
+      ...getAreaChartConfig(min, max),
+    };
+  }, [historicalData, selectedPeriod]);
+
   if (!historicalData[selectedPeriod])
     return (
       <div className="area-chart-wrapper">
@@ -58,88 +73,12 @@ export function HistoricalChart({
       </div>
     );
 
-  const options = {
-    title: "",
-    chart: {
-      type: "area",
-      animation: false,
-      backgroundColor: "rgba(25, 30, 41, 0.9)",
-      style: {
-        fontFamily: "TT Commons, sans-serif",
-        fontWeight: "normal",
-        fontSize: "14px",
-      },
-    },
-    credits: { enabled: false },
-    xAxis: {
-      // showFirstLabel: false,
-      // showLastLabel: false,
-      type: "datetime",
-      dateTimeLabelFormats: {
-        hour: "%H:%M",
-        minute: "%H:%M",
-        day: "%H:00",
-        // day: "%d %b",
-        month: "%b %y",
-        year: "%b %y",
-      },
-      crosshair: {
-        dashStyle: "Dash",
-        width: 0.5,
-      },
-
-      labels: {
-        reserveSpace: false,
-        y: 5,
-        overflow: "justify",
-        style: {
-          color: "#FFF",
-        },
-      },
-      tickWidth: 0,
-      minTickInterval: 4 * 3600 * 1000,
-    },
-    yAxis: {
-      showFirstLabel: false,
-
-      title: "",
-      opposite: true,
-      labels: {
-        reserveSpace: false,
-        x: -12,
-        style: { color: "#FFF" },
-      },
-      gridLineColor: "rgba(255,255,255,0.2)",
-      gridLineWidth: 0.5,
-    },
-    legend: { enabled: false },
-    plotOptions: {
-      area: {
-        animation: false,
-        color: "#01C38D",
-        lineWidth: 1,
-        fillColor: {
-          linearGradient: { x1: 0, y1: 1, x2: 0, y2: 0 },
-          stops: [
-            [0, "rgba(255, 255, 255, 0)"],
-            [1, "rgba(1, 195, 141, .25)"],
-          ],
-        },
-      },
-    },
-    series: [
-      {
-        type: "area",
-        name: "USD to BORG",
-        data: historicalData[selectedPeriod],
-      },
-    ],
-  };
   return (
     <div className="area-chart-wrapper">
       <AreaChart
+        constructorType={"stockChart"}
         highcharts={Highcharts}
-        options={options}
+        options={chartOptions}
         containerProps={{ style: { height: "100%", width: "100%" } }}
       />
     </div>

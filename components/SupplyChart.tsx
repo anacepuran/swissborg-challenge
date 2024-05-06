@@ -1,6 +1,8 @@
+import { pieChartOptions } from "@/utils/pieChartConfiguration";
 import { PieChartData } from "@/utils/types";
 import Highcharts from "highcharts";
 import dynamic from "next/dynamic";
+
 const PieChart = dynamic(() => import("highcharts-react-official"), {
   ssr: false,
 });
@@ -13,30 +15,6 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
   if (!chartData) return <div className="loader-chart" />;
 
   const options = {
-    title: "",
-    chart: {
-      type: "pie",
-      renderTo: "container",
-      style: {
-        fontFamily: "TT Commons, sans-serif",
-        fontWeight: "normal",
-        fontSize: "18px",
-      },
-      margin: [0, 0, 0, 0],
-    },
-
-    plotOptions: {
-      series: {
-        animation: false,
-        borderWidth: 0,
-        enableMouseTracking: false,
-      },
-      pie: {
-        innerSize: "70%",
-        borderRadius: 0,
-        startAngle: 80,
-      },
-    },
     series: [
       {
         data: chartData,
@@ -44,10 +22,11 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
           useHTML: true,
           style: { fontWeight: "normal" },
           connectorWidth: 0,
-          distance: 4,
+          distance: 0,
         },
       },
     ],
+    ...pieChartOptions,
   };
 
   return (
@@ -55,7 +34,9 @@ export const SupplyChart: React.FC<SupplyChartProps> = ({ chartData }) => {
       <PieChart
         highcharts={Highcharts}
         options={options}
-        containerProps={{ style: { height: "auto", width: "100%" } }}
+        containerProps={{
+          style: { height: "auto", width: "100%" },
+        }}
       />
     </div>
   );

@@ -5,7 +5,6 @@
 :root {
   --primary-color: #01c38d;
 }
-
 body {
   font-family: 'TT Commons', sans-serif;
 }
@@ -27,7 +26,7 @@ body {
   color: var(--primary-color);
 }
 
-/* HISTORICAL CHART */
+/* CHARTS */
 .chart-card {
   height: auto;
   width: fit-content;
@@ -36,35 +35,35 @@ body {
   box-shadow: -4px 6px 10px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
-
 .area-chart-wrapper {
   width: 500px;
-  height:140px;
-  margin: 0 auto;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .pie-chart-wrapper {
   width: 500px;
 }
-
 @media only screen and (max-width: 500px) {
   .area-chart-wrapper {
     max-width: 320px;
     height:120px;
   }
   .pie-chart-wrapper {
-    width: 320px;
+    width: 360px;
   }
 }
-
 .historical-chart-header {
   height: 3.6rem;
   padding: .5rem;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px 5px 0 0;
+}
+.highcharts-data-labels span {
+  width: 74px; 
+  word-break: break-word !important;
+  white-space: normal !important;
 }
 
 /* BUTTONS */
@@ -76,19 +75,20 @@ body {
 }
 .historical-chart-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
-  color: #01c38d;
+  color: var(--primary-color);
 }
 .historical-chart-button:active {
   background-color: rgba(255, 255, 255, 0.25);
-  color: #01c38d;
+  color: var(--primary-color);
 }
 .button-selected {
   background-color: rgba(255, 255, 255, 0.2);
-  color: #01c38d;
+  color: var(--primary-color);
 }
 .button-first { border-radius: 0 0 0 5px }
 .button-last { border-radius: 0 0 5px 0 }
 
+/* VISUAL ELEMENTS */
 .banner {
   background: linear-gradient(to bottom right, #191e29, #364053);
   color:white;
@@ -99,17 +99,14 @@ body {
   gap: 2rem;
   align-items: center;
   text-align: center;
-  /* padding:2rem; */
+  padding:4rem;
 }
-
 .separator {
   background-color: #8f96a1;
   width: 100%;
   height: 1px;
-  opacity: 0.4;
+  opacity: 0.2;
 }
-
-
 
 /* LOADING STATES */
 .loader {
@@ -133,5 +130,4 @@ body {
   0% { transform: rotate(0deg) }
   100% { transform: rotate(360deg) }
 }
-
 

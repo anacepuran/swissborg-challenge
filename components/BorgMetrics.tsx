@@ -3,15 +3,11 @@ import { HistoricalPeriod, Price } from "../utils/types";
 import { HistoricalChart } from "./HistoricalChart";
 import PriceInformation from "./PriceInformation";
 
-interface MetricsProps {
-  // chartData: HistoricalPricePeriod | undefined;
+interface BorgMetricsProps {
   priceInformation: Record<string, Price> | undefined;
 }
 
-export default function BorgMetrics({
-  // chartData,
-  priceInformation,
-}: MetricsProps) {
+export default function BorgMetrics({ priceInformation }: BorgMetricsProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<HistoricalPeriod>("day");
 
   const handlePeriodSelection = async (selected: HistoricalPeriod) => {
