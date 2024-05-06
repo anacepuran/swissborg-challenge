@@ -16,8 +16,8 @@ export default function PriceInformation({
         <Image
           src={"icons/usd-to-borg.svg"}
           alt={"usd-to-borg"}
-          width={32}
-          height={32}
+          width={4}
+          height={4}
           style={{ width: "4rem", height: "auto" }}
           priority
           unoptimized
