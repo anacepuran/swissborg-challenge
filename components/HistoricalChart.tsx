@@ -33,7 +33,8 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
       }
     };
     fetchData();
-  }, [historicalData, selectedPeriod]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPeriod]);
 
   const chartOptions = useMemo(() => {
     const onlyValues =
