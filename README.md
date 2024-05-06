@@ -1,2 +1,2 @@
 ## Deployed on Vercel
-Link: [https://swissborg-challenge.vercel.app/]https://swissborg-challenge.vercel.app/
+Link: [https://swissborg-challenge.vercel.app/]
