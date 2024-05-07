@@ -5,7 +5,12 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-      <link rel="preload" type="image/x-icon" href="icons/usd-to-borg.ico" />
+      <link
+        rel="preload"
+        href="icons/usd-to-borg.svg"
+        type="image"
+        as="image"
+      />
       <link
         rel="preload"
         href="fonts/TT-Commons-Light.woff2"
