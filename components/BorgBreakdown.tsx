@@ -1,6 +1,6 @@
 import { STATS_TO_DISPLAY } from "@/utils/configuration";
 import { BorgStats, PieChartData } from "@/utils/types";
-import { formatNumberWithCommas } from "@/utils/utils";
+import { displayPercentage, formatNumberWithCommas } from "@/utils/utils";
 import Image from "next/image";
 import { SupplyChart } from "./SupplyChart";
 
@@ -40,9 +40,7 @@ export default function BorgBreakdown({
                 <div>
                   (
                   <b>
-                    {formatNumberWithCommas(
-                      borgStats[row.attrName + "Percentage"]
-                    )}
+                    {displayPercentage(borgStats[row.attrName + "Percentage"])}
                   </b>
                   % of Circulating supply)
                 </div>
