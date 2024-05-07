@@ -36,10 +36,6 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
-  const chartData = useMemo(() => {
-    return historicalData[selectedPeriod];
-  }, [historicalData, selectedPeriod]);
-
   const chartOptions = useMemo(() => {
     const onlyValues =
       historicalData[selectedPeriod]?.map((point) => point[1]) ?? [];
@@ -50,12 +46,12 @@ export function HistoricalChart({ selectedPeriod }: HistoricalChartProps) {
         {
           type: "area",
           name: "USD to BORG",
-          data: chartData,
+          data: historicalData[selectedPeriod],
         },
       ],
       ...getAreaChartConfig(min, max),
     };
-  }, [chartData, historicalData, selectedPeriod]);
+  }, [historicalData, selectedPeriod]);
 
   if (!historicalData[selectedPeriod])
     return (
